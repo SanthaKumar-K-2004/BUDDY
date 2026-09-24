@@ -203,9 +203,15 @@ importers:
 
   apps/buddy-dashboard:
     dependencies:
+      '@buddy/activity-engine':
+        specifier: workspace:*
+        version: link:../../packages/activity-engine
       '@buddy/family-engine':
         specifier: workspace:*
         version: link:../../packages/family-engine
+      '@buddy/focus-engine':
+        specifier: workspace:*
+        version: link:../../packages/focus-engine
       '@buddy/i18n':
         specifier: workspace:*
         version: link:../../packages/i18n
@@ -218,12 +224,30 @@ importers:
       '@buddy/shared-types':
         specifier: workspace:*
         version: link:../../packages/shared-types
+      '@buddy/shield-core':
+        specifier: workspace:*
+        version: link:../../packages/shield-core
+      '@buddy/shield-cosmetic':
+        specifier: workspace:*
+        version: link:../../packages/shield-cosmetic
+      '@buddy/shield-dnr':
+        specifier: workspace:*
+        version: link:../../packages/shield-dnr
+      '@buddy/shield-policy':
+        specifier: workspace:*
+        version: link:../../packages/shield-policy
+      '@buddy/site-adapters':
+        specifier: workspace:*
+        version: link:../../packages/site-adapters
       '@buddy/storage':
         specifier: workspace:*
         version: link:../../packages/storage
       '@buddy/ui-components':
         specifier: workspace:*
         version: link:../../packages/ui-components
+      '@buddy/watch-time':
+        specifier: workspace:*
+        version: link:../../packages/watch-time
       preact:
         specifier: ^10.26.4
         version: 10.29.8

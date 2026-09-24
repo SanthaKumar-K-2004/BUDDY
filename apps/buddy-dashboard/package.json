@@ -13,13 +13,21 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@buddy/activity-engine": "workspace:*",
     "@buddy/family-engine": "workspace:*",
+    "@buddy/focus-engine": "workspace:*",
     "@buddy/i18n": "workspace:*",
     "@buddy/intelligence-engine": "workspace:*",
     "@buddy/mood-engine": "workspace:*",
     "@buddy/shared-types": "workspace:*",
+    "@buddy/shield-core": "workspace:*",
+    "@buddy/shield-cosmetic": "workspace:*",
+    "@buddy/shield-dnr": "workspace:*",
+    "@buddy/shield-policy": "workspace:*",
+    "@buddy/site-adapters": "workspace:*",
     "@buddy/storage": "workspace:*",
     "@buddy/ui-components": "workspace:*",
+    "@buddy/watch-time": "workspace:*",
     "preact": "^10.26.4"
   },
   "devDependencies": {

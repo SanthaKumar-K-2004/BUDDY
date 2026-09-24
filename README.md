@@ -185,46 +185,41 @@ We believe that digital wellness software should never become spyware. Buddy adh
 - **pnpm**: v12.0.0 or higher (or `corepack enable pnpm`)
 - **Browser**: Google Chrome (v116+), Chromium, Brave, Microsoft Edge, or Mozilla Firefox (v120+)
 
-### 1. Clone the Repository
+### 🚀 Instant Install (100% Free & No Coding Required)
+
+1. Download the unified all-in-one release:
+   - **For Chrome / Brave / Edge:** Download [`release/BUDDY-v1.0.0-Chrome.zip`](release/BUDDY-v1.0.0-Chrome.zip)
+   - **For Mozilla Firefox:** Download [`release/BUDDY-v1.0.0-Firefox.zip`](release/BUDDY-v1.0.0-Firefox.zip)
+2. Extract the downloaded ZIP file into a folder on your computer.
+3. In Chrome/Brave/Edge: Navigate to `chrome://extensions/`, turn ON **Developer mode**, click **Load unpacked**, and select the extracted folder.
+4. Pin **BUDDY** to your toolbar and enjoy full protection, focus, pet, and family controls in one single extension!
+
+---
+
+### 🛠️ Developer Setup & Build from Source
+
+#### Prerequisites
+- **Node.js**: v22.0.0 or higher
+- **pnpm**: v12.0.0 or higher
+
 ```bash
+# 1. Clone the repository
 git clone https://github.com/SanthaKumar-K-2004/BUDDY.git
 cd BUDDY
-```
 
-### 2. Install Dependencies
-```bash
+# 2. Install dependencies
 pnpm install
-```
 
-### 3. Build the Extensions
-Compile all packages and build Manifest V3 output bundles for Chrome and Firefox:
-```bash
-# Build all extensions for Chrome MV3 (production)
+# 3. Build the unified all-in-one extension for Chrome and Firefox
 pnpm run build
 
-# Or build specifically for Firefox MV3
-pnpm --filter buddy-dashboard run build:firefox
-pnpm --filter buddy-shield run build:firefox
-pnpm --filter buddy-focus run build:firefox
-pnpm --filter buddy-family run build:firefox
+# 4. Package production ZIPs
+pnpm run build:zip
 ```
 
-### 4. Load in Your Browser
-
-#### For Google Chrome / Brave / Edge:
-1. Navigate to `chrome://extensions/` in your browser URL bar.
-2. Enable **Developer mode** toggle in the top-right corner.
-3. Click **Load unpacked**.
-4. Select any of the built extension directories:
-   - `apps/buddy-dashboard/.output/chrome-mv3`
-   - `apps/buddy-shield/.output/chrome-mv3`
-   - `apps/buddy-focus/.output/chrome-mv3`
-   - `apps/buddy-family/.output/chrome-mv3`
-
-#### For Mozilla Firefox:
-1. Navigate to `about:debugging#/runtime/this-firefox`.
-2. Click **Load Temporary Add-on...**.
-3. Select the `manifest.json` file inside any `.output/firefox-mv3` directory.
+#### Load Unpacked in Your Browser:
+- **Chrome / Brave / Edge:** Load `apps/buddy-dashboard/.output/chrome-mv3`
+- **Firefox:** Navigate to `about:debugging#/runtime/this-firefox` and load `apps/buddy-dashboard/.output/firefox-mv3/manifest.json`
 
 ---
 

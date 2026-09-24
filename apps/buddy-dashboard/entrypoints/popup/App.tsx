@@ -3,11 +3,23 @@ import { useDashboardData } from '../../src/hooks/useDashboardData.js';
 import { StatCard, PetCard, LoadingState, ErrorState } from '@buddy/ui-components';
 import { TodayScreen } from '../../src/screens/TodayScreen.js';
 import { PetScreen } from '../../src/screens/PetScreen.js';
+import { BlockedScreen } from '../../src/screens/BlockedScreen.js';
+import { FocusScreen } from '../../src/screens/FocusScreen.js';
+import { FamilyScreen } from '../../src/screens/FamilyScreen.js';
 
 export function App() {
-  const [view, setView] = useState<'home' | 'today' | 'pet'>('home');
-  const { today, mood, isFocusActive: _isFocusActive, isShieldActive: _isShieldActive, isLoading, error, refresh } =
-    useDashboardData();
+  const [view, setView] = useState<'home' | 'shield' | 'focus' | 'today' | 'family' | 'pet'>('home');
+  const {
+    today,
+    mood,
+    streak,
+    isFocusActive,
+    focusSessionStart,
+    isShieldActive,
+    isLoading,
+    error,
+    refresh,
+  } = useDashboardData();
 
   const activeMs = today?.totalActiveMs ?? 0;
   const focusMs = today?.focusMs ?? 0;
@@ -22,8 +34,8 @@ export function App() {
   return (
     <div
       style={{
-        width: '360px',
-        maxHeight: '560px',
+        width: '380px',
+        maxHeight: '600px',
         overflowY: 'auto',
         padding: '14px',
         boxSizing: 'border-box',
@@ -46,7 +58,19 @@ export function App() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
           <span style={{ fontSize: '18px' }}>🐾</span>
           <span style={{ fontSize: '15px', fontWeight: 700, color: 'var(--buddy-text-main, #0f172a)' }}>
-            Buddy Dashboard
+            BUDDY Suite
+          </span>
+          <span
+            style={{
+              fontSize: '10px',
+              padding: '2px 6px',
+              borderRadius: '10px',
+              backgroundColor: isShieldActive ? '#d1fae5' : '#fee2e2',
+              color: isShieldActive ? '#065f46' : '#991b1b',
+              fontWeight: 600,
+            }}
+          >
+            {isShieldActive ? 'Shield Active' : 'Shield Off'}
           </span>
         </div>
 
@@ -94,18 +118,20 @@ export function App() {
           <div
             style={{
               display: 'flex',
-              gap: '6px',
+              gap: '4px',
               marginBottom: '12px',
+              overflowX: 'auto',
+              paddingBottom: '2px',
             }}
           >
-            {(['home', 'today', 'pet'] as const).map((tab) => (
+            {(['home', 'shield', 'focus', 'today', 'family', 'pet'] as const).map((tab) => (
               <button
                 key={tab}
                 type="button"
                 onClick={() => setView(tab)}
                 style={{
                   flex: 1,
-                  padding: '5px',
+                  padding: '6px 4px',
                   borderRadius: 'var(--buddy-radius-sm, 6px)',
                   border: 'none',
                   backgroundColor:
@@ -115,9 +141,10 @@ export function App() {
                   fontWeight: 600,
                   cursor: 'pointer',
                   textTransform: 'capitalize',
+                  whiteSpace: 'nowrap',
                 }}
               >
-                {tab}
+                {tab === 'shield' ? '🛡️ Shield' : tab === 'focus' ? '⏱️ Focus' : tab}
               </button>
             ))}
           </div>
@@ -137,7 +164,21 @@ export function App() {
             </div>
           )}
 
+          {view === 'shield' && <BlockedScreen today={today} isShieldActive={isShieldActive} />}
+
+          {view === 'focus' && (
+            <FocusScreen
+              today={today}
+              streak={streak}
+              isFocusActive={isFocusActive}
+              focusSessionStart={focusSessionStart}
+              onRefresh={refresh}
+            />
+          )}
+
           {view === 'today' && <TodayScreen today={today} />}
+
+          {view === 'family' && <FamilyScreen />}
 
           {view === 'pet' && <PetScreen mood={mood} />}
         </>

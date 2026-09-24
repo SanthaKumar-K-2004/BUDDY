@@ -1,0 +1,173 @@
+[
+  {
+    "action": {
+      "type": "allow"
+    },
+    "condition": {
+      "initiatorDomains": [
+        "company.com"
+      ],
+      "urlFilter": "||internal-analytics.company.com^"
+    },
+    "id": 24,
+    "priority": 100201
+  },
+  {
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "domainType": "thirdParty",
+      "resourceTypes": [
+        "image"
+      ],
+      "urlFilter": "/pixel.gif"
+    },
+    "id": 25,
+    "priority": 102
+  },
+  {
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "domainType": "thirdParty",
+      "resourceTypes": [
+        "script"
+      ],
+      "urlFilter": "||hotjar.com^"
+    },
+    "id": 26,
+    "priority": 102
+  },
+  {
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "resourceTypes": [
+        "script"
+      ],
+      "urlFilter": "||appsflyer.com^"
+    },
+    "id": 27,
+    "priority": 101
+  },
+  {
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "resourceTypes": [
+        "script"
+      ],
+      "urlFilter": "||googletagmanager.com^"
+    },
+    "id": 28,
+    "priority": 101
+  },
+  {
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "resourceTypes": [
+        "xmlhttprequest"
+      ],
+      "urlFilter": "||telemetry.example.com^"
+    },
+    "id": 29,
+    "priority": 101
+  },
+  {
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "resourceTypes": [
+        "xmlhttprequest",
+        "ping"
+      ],
+      "urlFilter": "/telemetry/collect"
+    },
+    "id": 30,
+    "priority": 76
+  },
+  {
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "domainType": "thirdParty",
+      "urlFilter": "||analytics.google.com^"
+    },
+    "id": 31,
+    "priority": 2
+  },
+  {
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "domainType": "thirdParty",
+      "urlFilter": "||branch.io^"
+    },
+    "id": 32,
+    "priority": 2
+  },
+  {
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "domainType": "thirdParty",
+      "urlFilter": "||criteo.com^"
+    },
+    "id": 33,
+    "priority": 2
+  },
+  {
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "domainType": "thirdParty",
+      "urlFilter": "||fingerprintjs.com^"
+    },
+    "id": 34,
+    "priority": 2
+  },
+  {
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "domainType": "thirdParty",
+      "urlFilter": "||mixpanel.com^"
+    },
+    "id": 35,
+    "priority": 2
+  },
+  {
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "domainType": "thirdParty",
+      "urlFilter": "||segment.io^"
+    },
+    "id": 36,
+    "priority": 2
+  },
+  {
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "domainType": "thirdParty",
+      "urlFilter": "||taboola.com^"
+    },
+    "id": 37,
+    "priority": 2
+  }
+]
