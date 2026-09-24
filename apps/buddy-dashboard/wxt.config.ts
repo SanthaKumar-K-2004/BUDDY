@@ -48,6 +48,12 @@ export default defineConfig({
     content_security_policy: {
       extension_pages: "script-src 'self'; object-src 'self';",
     },
+    web_accessible_resources: [
+      {
+        resources: ['icons/*'],
+        matches: ['<all_urls>'],
+      },
+    ],
     side_panel: browser !== 'firefox' ? {
       default_path: 'entrypoints/sidepanel/index.html',
     } : undefined,

@@ -162,6 +162,9 @@ export function App() {
 
   const activeMs = today?.totalActiveMs ?? 0;
   const focusMs = today?.focusMs ?? 0;
+  const rawMediaMs = today?.mediaMs ?? 0;
+  const mediaMs = activeMs > 0 ? Math.min(rawMediaMs, activeMs) : rawMediaMs;
+  const socialMs = today?.socialMs ?? 0;
   const blockedCount = (today?.adsBlocked ?? 0) + (today?.trackersBlocked ?? 0);
 
   const handleOpenSidePanel = () => {
@@ -397,6 +400,7 @@ export function App() {
                 name="Buddy"
                 visualState={mood.visualState}
                 score={mood.score}
+                compact={true}
               />
 
               {/* Cohesive Floating Glass Metrics Dock (No Box Look) */}
@@ -446,6 +450,166 @@ export function App() {
                     {blockedCount.toLocaleString()}
                   </div>
                 </div>
+              </div>
+
+              {/* Time Monitoring & Analysis Command Panel */}
+              <div
+                style={{
+                  backgroundColor: 'rgba(255, 255, 255, 0.03)',
+                  borderRadius: '12px',
+                  border: '1px solid rgba(255, 255, 255, 0.06)',
+                  padding: '10px 12px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '8px',
+                }}
+              >
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                    <span style={{ fontSize: '11px', fontWeight: 700, color: '#f8fafc', letterSpacing: '-0.2px' }}>
+                      ⏱️ Time Analysis
+                    </span>
+                    <span
+                      style={{
+                        fontSize: '9px',
+                        padding: '1px 6px',
+                        borderRadius: '999px',
+                        backgroundColor: activeMs > 0 && focusMs / activeMs >= 0.5 ? 'rgba(16, 185, 129, 0.15)' : 'rgba(56, 189, 248, 0.15)',
+                        color: activeMs > 0 && focusMs / activeMs >= 0.5 ? '#34d399' : '#38bdf8',
+                        fontWeight: 700,
+                      }}
+                    >
+                      {activeMs > 0 ? `${Math.round((focusMs / activeMs) * 100)}% Focus Ratio` : 'Live Tracking'}
+                    </span>
+                  </div>
+                  <span style={{ fontSize: '11px', color: '#94a3b8', fontWeight: 600 }}>
+                    {formatDurationMinutes(activeMs)} Recorded
+                  </span>
+                </div>
+
+                {/* Color-Coded Distribution Bar */}
+                <div
+                  style={{
+                    width: '100%',
+                    height: '6px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.06)',
+                    borderRadius: '999px',
+                    overflow: 'hidden',
+                    display: 'flex',
+                  }}
+                >
+                  {activeMs > 0 ? (
+                    <>
+                      {focusMs > 0 && (
+                        <div
+                          title={`Focus: ${formatDurationMinutes(focusMs)}`}
+                          style={{
+                            width: `${Math.min(100, Math.round((focusMs / activeMs) * 100))}%`,
+                            height: '100%',
+                            backgroundColor: '#818cf8',
+                          }}
+                        />
+                      )}
+                      {mediaMs > 0 && (
+                        <div
+                          title={`Media: ${formatDurationMinutes(mediaMs)}`}
+                          style={{
+                            width: `${Math.min(100, Math.round((mediaMs / activeMs) * 100))}%`,
+                            height: '100%',
+                            backgroundColor: '#fb7185',
+                          }}
+                        />
+                      )}
+                      {socialMs > 0 && (
+                        <div
+                          title={`Social: ${formatDurationMinutes(socialMs)}`}
+                          style={{
+                            width: `${Math.min(100, Math.round((socialMs / activeMs) * 100))}%`,
+                            height: '100%',
+                            backgroundColor: '#60a5fa',
+                          }}
+                        />
+                      )}
+                      {Math.max(0, activeMs - focusMs - mediaMs - socialMs) > 0 && (
+                        <div
+                          title="General Browsing"
+                          style={{
+                            flex: 1,
+                            height: '100%',
+                            backgroundColor: '#34d399',
+                            opacity: 0.7,
+                          }}
+                        />
+                      )}
+                    </>
+                  ) : (
+                    <div style={{ width: '100%', height: '100%', backgroundColor: 'rgba(255, 255, 255, 0.08)' }} />
+                  )}
+                </div>
+
+                {/* Categories & Minutes Legend */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: '#cbd5e1' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
+                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#818cf8' }} />
+                    <span>Focus {formatDurationMinutes(focusMs)}</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
+                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#fb7185' }} />
+                    <span>Media {formatDurationMinutes(mediaMs)}</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
+                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#34d399' }} />
+                    <span>Web {formatDurationMinutes(Math.max(0, activeMs - focusMs - mediaMs - socialMs))}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Quick Jump Action Buttons */}
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <button
+                  type="button"
+                  onClick={() => setView('focus')}
+                  style={{
+                    flex: 1,
+                    padding: '8px 10px',
+                    backgroundColor: 'rgba(99, 102, 241, 0.12)',
+                    border: '1px solid rgba(99, 102, 241, 0.3)',
+                    borderRadius: '10px',
+                    color: '#a5b4fc',
+                    fontSize: '11px',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '4px',
+                    transition: 'all 0.2s ease',
+                  }}
+                >
+                  ⚡ Start Focus
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setView('today')}
+                  style={{
+                    flex: 1,
+                    padding: '8px 10px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.04)',
+                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    borderRadius: '10px',
+                    color: '#f8fafc',
+                    fontSize: '11px',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '4px',
+                    transition: 'all 0.2s ease',
+                  }}
+                >
+                  📊 Deep Analytics
+                </button>
               </div>
             </div>
           )}

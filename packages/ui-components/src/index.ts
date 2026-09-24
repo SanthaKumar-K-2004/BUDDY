@@ -20,3 +20,4 @@ export * from './PetCard.js';
 export * from './StreakCard.js';
 export * from './EmptyState.js';
 export * from './LoadingState.js';
+export * from './pet-audio.js';
