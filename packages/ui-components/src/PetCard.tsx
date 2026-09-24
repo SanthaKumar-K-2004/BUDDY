@@ -47,7 +47,7 @@ function getPetStateColor(state: PetVisualState): string {
       return '#64748b'; // Slate
     case 'neutral':
     default:
-      return '#38bdf8'; // Sky
+      return '#f97316'; // Warm Corgi Orange
   }
 }
 
@@ -108,14 +108,14 @@ export function PetCard({
       if (animType === 'sleep' || visualState === 'sleeping' || !cardRef.current) return;
       const rect = cardRef.current.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + 60; // Approximate eye level
+      const centerY = rect.top + 55; // Eye level
 
       const deltaX = e.clientX - centerX;
       const deltaY = e.clientY - centerY;
 
-      // Smooth normalization bounded between -6 and +6 pixels
-      const normX = Math.max(-6, Math.min(6, deltaX * 0.04));
-      const normY = Math.max(-4, Math.min(5, deltaY * 0.04));
+      // Smooth normalization bounded between -5.5 and +5.5 pixels
+      const normX = Math.max(-5.5, Math.min(5.5, deltaX * 0.04));
+      const normY = Math.max(-4, Math.min(4.5, deltaY * 0.04));
 
       setPupilPos({ x: normX, y: normY });
     };
@@ -236,7 +236,7 @@ export function PetCard({
           background: rgba(255, 255, 255, 0.04);
           border: 1px solid rgba(255, 255, 255, 0.08);
           border-radius: 999px;
-          color: #f8fafc;
+          color: var(--buddy-text-main, #f8fafc);
           padding: 5px 11px;
           font-size: 11px;
           font-weight: 600;
@@ -259,7 +259,7 @@ export function PetCard({
         .buddy-sound-toggle {
           background: transparent;
           border: none;
-          color: #94a3b8;
+          color: var(--buddy-text-muted, #94a3b8);
           font-size: 12px;
           cursor: pointer;
           padding: 3px 6px;
@@ -270,7 +270,7 @@ export function PetCard({
           transition: all 0.2s ease;
         }
         .buddy-sound-toggle:hover {
-          color: #f8fafc;
+          color: var(--buddy-text-main, #f8fafc);
           background: rgba(255, 255, 255, 0.08);
         }
       `}</style>
@@ -299,7 +299,7 @@ export function PetCard({
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <span style={{ fontSize: '13px', fontWeight: 800, color: '#f8fafc', letterSpacing: '-0.3px' }}>
+            <span style={{ fontSize: '13px', fontWeight: 800, color: 'var(--buddy-text-main, #f8fafc)', letterSpacing: '-0.3px' }}>
               {name}
             </span>
             <span
@@ -358,13 +358,13 @@ export function PetCard({
           </div>
         )}
 
-        {/* High-Definition Vector Guardian Avatar with Live Cursor-Tracking Eyes */}
+        {/* Realistic Orange & White Corgi Guardian Avatar with Live Cursor-Tracking Eyes */}
         <div
           onClick={() => triggerAction('pet')}
           title="Click to pet Buddy! (Eyes follow your cursor)"
           style={{
-            width: compact ? '92px' : '106px',
-            height: compact ? '92px' : '106px',
+            width: compact ? '96px' : '110px',
+            height: compact ? '96px' : '110px',
             marginBottom: '4px',
             position: 'relative',
             cursor: 'pointer',
@@ -376,7 +376,7 @@ export function PetCard({
             ...animStyle,
           }}
         >
-          {/* Ambient Radial Aura */}
+          {/* Ambient Glow Aura */}
           <div
             style={{
               position: 'absolute',
@@ -389,26 +389,36 @@ export function PetCard({
 
           <svg
             viewBox="0 0 120 120"
-            width={compact ? 92 : 106}
-            height={compact ? 92 : 106}
+            width={compact ? 96 : 110}
+            height={compact ? 96 : 110}
             style={{ overflow: 'visible', filter: `drop-shadow(0 4px 14px ${accentColor}33)` }}
           >
             <defs>
-              {/* Luxury Metallic Body Gradients */}
-              <linearGradient id="petBodyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#1e293b" />
-                <stop offset="100%" stopColor="#0f172a" />
+              {/* Rich Orange Fur Gradients */}
+              <linearGradient id="corgiOrange" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#fb923c" />
+                <stop offset="60%" stopColor="#f97316" />
+                <stop offset="100%" stopColor="#ea580c" />
               </linearGradient>
 
-              <linearGradient id="petInnerScreen" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#090d16" />
-                <stop offset="100%" stopColor="#04060a" />
+              {/* Soft White Muzzle Gradient */}
+              <linearGradient id="corgiWhite" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#ffffff" />
+                <stop offset="100%" stopColor="#f1f5f9" />
               </linearGradient>
 
-              <linearGradient id="earInner" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor={accentColor} stopOpacity="0.8" />
-                <stop offset="100%" stopColor="#0f172a" />
+              {/* Inner Ear Soft Pink Gradient */}
+              <linearGradient id="earPink" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#fecdd3" />
+                <stop offset="100%" stopColor="#f43f5e" stopOpacity="0.75" />
               </linearGradient>
+
+              {/* Hazel Dog Eye Gradient */}
+              <radialGradient id="dogEyeGrad" cx="40%" cy="40%" r="60%">
+                <stop offset="0%" stopColor="#78350f" />
+                <stop offset="60%" stopColor="#451a03" />
+                <stop offset="100%" stopColor="#1c1917" />
+              </radialGradient>
             </defs>
 
             {/* Glowing Aura Ring */}
@@ -419,132 +429,153 @@ export function PetCard({
               fill="none"
               stroke={accentColor}
               strokeWidth="1.5"
-              opacity="0.4"
+              opacity="0.45"
               strokeDasharray="4 4"
             />
 
-            {/* Left Ear */}
+            {/* Left Perked Corgi Ear */}
             <path
-              d="M 36 34 C 26 14, 18 20, 28 40"
-              fill="url(#earInner)"
-              stroke={accentColor}
-              strokeWidth="2.5"
+              d="M 36 36 C 24 10, 16 16, 26 44"
+              fill="#f97316"
+              stroke="#ea580c"
+              strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
-            <circle cx="23" cy="18" r="3" fill={accentColor} />
-
-            {/* Right Ear */}
+            {/* Left Inner Ear Pink Fluff */}
             <path
-              d="M 84 34 C 94 14, 102 20, 92 40"
-              fill="url(#earInner)"
-              stroke={accentColor}
-              strokeWidth="2.5"
+              d="M 33 34 C 25 18, 20 22, 27 40"
+              fill="#fca5a5"
+            />
+
+            {/* Right Perked Corgi Ear */}
+            <path
+              d="M 84 36 C 96 10, 104 16, 94 44"
+              fill="#f97316"
+              stroke="#ea580c"
+              strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
-            <circle cx="97" cy="18" r="3" fill={accentColor} />
-
-            {/* Main Rounded Head */}
-            <rect
-              x="26"
-              y="30"
-              width="68"
-              height="66"
-              rx="28"
-              ry="28"
-              fill="url(#petBodyGrad)"
-              stroke={accentColor}
-              strokeWidth="2.5"
+            {/* Right Inner Ear Pink Fluff */}
+            <path
+              d="M 87 34 C 95 18, 100 22, 93 40"
+              fill="#fca5a5"
             />
 
-            {/* Inner Visor Display */}
-            <rect
-              x="32"
-              y="38"
-              width="56"
-              height="50"
-              rx="20"
-              ry="20"
-              fill="url(#petInnerScreen)"
-              stroke="rgba(255, 255, 255, 0.08)"
-              strokeWidth="1"
+            {/* Main Rounded Orange Corgi Head */}
+            <ellipse
+              cx="60"
+              cy="58"
+              rx="36"
+              ry="32"
+              fill="#f97316"
+              stroke="#ea580c"
+              strokeWidth="2"
+            />
+
+            {/* Snowy White Face Blaze & Cheeks */}
+            <path
+              d="M 54 36 C 54 44, 46 50, 36 56 C 28 62, 30 76, 42 78 C 50 80, 56 78, 60 76 C 64 78, 70 80, 78 78 C 90 76, 92 62, 84 56 C 74 50, 66 44, 66 36 Z"
+              fill="#ffffff"
+              stroke="#cbd5e1"
+              strokeWidth="1.5"
             />
 
             {/* Soft Cheeks Blushing */}
-            <circle cx="39" cy="69" r="4.5" fill="#f43f5e" opacity="0.35" />
-            <circle cx="81" cy="69" r="4.5" fill="#f43f5e" opacity="0.35" />
+            <circle cx="37" cy="65" r="5" fill="#f43f5e" opacity="0.3" />
+            <circle cx="83" cy="65" r="5" fill="#f43f5e" opacity="0.3" />
 
-            {/* Central Nose / Shield Crest */}
+            {/* Corgi Button Nose (Soft Rounded Inverted Triangle) */}
             <path
-              d="M 58 64 L 62 64 L 60 67 Z"
-              fill={accentColor}
-              opacity="0.8"
+              d="M 56 65 Q 60 63 64 65 Q 64 69 60 71 Q 56 69 56 65 Z"
+              fill="#1e293b"
             />
+            {/* Nose Specular Highlight */}
+            <ellipse cx="59" cy="65" rx="1.5" ry="0.8" fill="#94a3b8" />
 
-            {/* EYES & EXPRESSION */}
+            {/* EYES & FACIAL EXPRESSIONS */}
             {animType === 'sleep' || visualState === 'sleeping' ? (
-              // Sleeping peaceful eye lines
+              // Sleeping calm happy curved lines
               <g>
-                <path d="M 38 60 Q 44 65 50 60" fill="none" stroke="#a78bfa" strokeWidth="2.5" strokeLinecap="round" />
-                <path d="M 70 60 Q 76 65 82 60" fill="none" stroke="#a78bfa" strokeWidth="2.5" strokeLinecap="round" />
-                <path d="M 56 71 Q 60 74 64 71" fill="none" stroke="#a78bfa" strokeWidth="2" strokeLinecap="round" />
-                <text x="88" y="38" fill="#a78bfa" fontSize="12" fontWeight="bold">Z</text>
-                <text x="96" y="27" fill="#a78bfa" fontSize="9" fontWeight="bold">z</text>
+                <path d="M 39 54 Q 45 59 51 54" fill="none" stroke="#64748b" strokeWidth="2.5" strokeLinecap="round" />
+                <path d="M 69 54 Q 75 59 81 54" fill="none" stroke="#64748b" strokeWidth="2.5" strokeLinecap="round" />
+                <path d="M 57 74 Q 60 76 63 74" fill="none" stroke="#475569" strokeWidth="2" strokeLinecap="round" />
+                <text x="88" y="34" fill="#a78bfa" fontSize="12" fontWeight="bold">Z</text>
+                <text x="96" y="24" fill="#a78bfa" fontSize="9" fontWeight="bold">z</text>
               </g>
             ) : animType === 'petting' || animType === 'bounce' || visualState === 'happy' || visualState === 'ecstatic' ? (
-              // Joyful smiling eyes ^ ^
+              // Happy squint eyes with cute pink tongue
               <g>
-                <path d="M 38 59 Q 44 49 50 59" fill="none" stroke="#34d399" strokeWidth="3" strokeLinecap="round" />
-                <path d="M 70 59 Q 76 49 82 59" fill="none" stroke="#34d399" strokeWidth="3" strokeLinecap="round" />
-                <path d="M 52 70 Q 60 81 68 70 Z" fill="#f43f5e" stroke="#ffffff" strokeWidth="1" />
+                <path d="M 39 53 Q 45 45 51 53" fill="none" stroke="#1e293b" strokeWidth="3" strokeLinecap="round" />
+                <path d="M 69 53 Q 75 45 81 53" fill="none" stroke="#1e293b" strokeWidth="3" strokeLinecap="round" />
+                {/* Cheerful Mouth & Tongue */}
+                <path d="M 54 72 Q 60 75 66 72" fill="none" stroke="#1e293b" strokeWidth="2" strokeLinecap="round" />
+                <path d="M 57 73 Q 60 82 63 73 Z" fill="#f43f5e" stroke="#1e293b" strokeWidth="1" />
               </g>
             ) : isBlinking ? (
-              // Natural blink state
+              // Organic blink
               <g>
-                <line x1="39" y1="58" x2="49" y2="58" stroke={accentColor} strokeWidth="3" strokeLinecap="round" />
-                <line x1="71" y1="58" x2="81" y2="58" stroke={accentColor} strokeWidth="3" strokeLinecap="round" />
-                <path d="M 54 71 Q 60 75 66 71" fill="none" stroke={accentColor} strokeWidth="2" strokeLinecap="round" />
+                <line x1="40" y1="54" x2="50" y2="54" stroke="#1e293b" strokeWidth="2.8" strokeLinecap="round" />
+                <line x1="70" y1="54" x2="80" y2="54" stroke="#1e293b" strokeWidth="2.8" strokeLinecap="round" />
+                <path d="M 55 73 Q 60 76 65 73" fill="none" stroke="#1e293b" strokeWidth="2" strokeLinecap="round" />
               </g>
             ) : (
-              // Active, interactive cursor-following eyes!
+              // Dynamic Live Cursor-Tracking Eyes (Hazel Corgi Eyes)
               <g>
                 {/* Left Eye Sclera */}
-                <ellipse cx="44" cy="58" rx="8" ry="9" fill="#030712" stroke={`${accentColor}66`} strokeWidth="1.2" />
-                {/* Left Eye Pupil (Tracks Cursor in Real Time) */}
+                <ellipse cx="45" cy="54" rx="7.5" ry="8" fill="#ffffff" stroke="#cbd5e1" strokeWidth="1" />
+                {/* Left Eye Iris & Pupil */}
                 <circle
-                  cx={44 + pupilPos.x}
-                  cy={58 + pupilPos.y}
+                  cx={45 + pupilPos.x}
+                  cy={54 + pupilPos.y}
                   r="5"
-                  fill={visualState === 'focused' ? '#38bdf8' : '#f8fafc'}
+                  fill="#78350f"
                 />
-                {/* Left Specular Highlight */}
-                <circle cx={42 + pupilPos.x * 0.7} cy={56 + pupilPos.y * 0.7} r="2" fill="#ffffff" />
-                <circle cx={46 + pupilPos.x * 0.7} cy={60 + pupilPos.y * 0.7} r="1" fill="#ffffff" opacity="0.7" />
+                <circle
+                  cx={45 + pupilPos.x}
+                  cy={54 + pupilPos.y}
+                  r="3.2"
+                  fill="#000000"
+                />
+                {/* Specular Catchlights */}
+                <circle cx={43.5 + pupilPos.x * 0.7} cy={52.5 + pupilPos.y * 0.7} r="1.8" fill="#ffffff" />
+                <circle cx={46.5 + pupilPos.x * 0.7} cy={55.5 + pupilPos.y * 0.7} r="0.9" fill="#ffffff" opacity="0.8" />
 
                 {/* Right Eye Sclera */}
-                <ellipse cx="76" cy="58" rx="8" ry="9" fill="#030712" stroke={`${accentColor}66`} strokeWidth="1.2" />
-                {/* Right Eye Pupil (Tracks Cursor in Real Time) */}
+                <ellipse cx="75" cy="54" rx="7.5" ry="8" fill="#ffffff" stroke="#cbd5e1" strokeWidth="1" />
+                {/* Right Eye Iris & Pupil */}
                 <circle
-                  cx={76 + pupilPos.x}
-                  cy={58 + pupilPos.y}
+                  cx={75 + pupilPos.x}
+                  cy={54 + pupilPos.y}
                   r="5"
-                  fill={visualState === 'focused' ? '#38bdf8' : '#f8fafc'}
+                  fill="#78350f"
                 />
-                {/* Right Specular Highlight */}
-                <circle cx={74 + pupilPos.x * 0.7} cy={56 + pupilPos.y * 0.7} r="2" fill="#ffffff" />
-                <circle cx={78 + pupilPos.x * 0.7} cy={60 + pupilPos.y * 0.7} r="1" fill="#ffffff" opacity="0.7" />
+                <circle
+                  cx={75 + pupilPos.x}
+                  cy={54 + pupilPos.y}
+                  r="3.2"
+                  fill="#000000"
+                />
+                {/* Specular Catchlights */}
+                <circle cx={73.5 + pupilPos.x * 0.7} cy={52.5 + pupilPos.y * 0.7} r="1.8" fill="#ffffff" />
+                <circle cx={76.5 + pupilPos.x * 0.7} cy={55.5 + pupilPos.y * 0.7} r="0.9" fill="#ffffff" opacity="0.8" />
 
-                {/* Mouth */}
-                {visualState === 'focused' ? (
-                  <path d="M 54 71 Q 60 74 66 71" fill="none" stroke="#38bdf8" strokeWidth="2" strokeLinecap="round" />
-                ) : visualState === 'tired' ? (
-                  <ellipse cx="60" cy="73" rx="3" ry="4" fill="#fbbf24" />
-                ) : (
-                  <path d="M 53 71 Q 60 76 67 71" fill="none" stroke="#38bdf8" strokeWidth="2.2" strokeLinecap="round" />
-                )}
+                {/* Sweet Corgi Smile */}
+                <path d="M 54 72 Q 57 74 60 72 Q 63 74 66 72" fill="none" stroke="#1e293b" strokeWidth="2" strokeLinecap="round" />
               </g>
             )}
+
+            {/* Emerald Guardian Collar with Shield Charm */}
+            <path
+              d="M 44 82 Q 60 87 76 82"
+              fill="none"
+              stroke="#0f766e"
+              strokeWidth="4"
+              strokeLinecap="round"
+            />
+            {/* Heart/Shield Charm */}
+            <circle cx="60" cy="86" r="3.5" fill="#10b981" stroke="#ffffff" strokeWidth="1" />
           </svg>
         </div>
 
@@ -558,7 +589,7 @@ export function PetCard({
             borderRadius: '10px',
             border: '1px solid rgba(255, 255, 255, 0.05)',
             fontSize: '11px',
-            color: '#cbd5e1',
+            color: 'var(--buddy-text-muted, #cbd5e1)',
             lineHeight: '1.4',
             marginBottom: '8px',
             boxSizing: 'border-box',
@@ -623,7 +654,7 @@ export function PetCard({
               display: 'flex',
               justifyContent: 'space-between',
               fontSize: '10px',
-              color: '#94a3b8',
+              color: 'var(--buddy-text-muted, #94a3b8)',
               marginBottom: '3px',
             }}
           >

@@ -13,6 +13,18 @@
 
 <br/>
 
+### 📥 Instant Download & GitHub Links
+
+| Resource | Direct Link | Details |
+| :--- | :--- | :--- |
+| **📦 Chrome / Brave / Edge ZIP** | **[Download BUDDY-v1.0.0-Chrome.zip](https://github.com/SanthaKumar-K-2004/BUDDY/raw/main/release/BUDDY-v1.0.0-Chrome.zip)** | Ready-to-unzip MV3 package (~370 KB) |
+| **📁 Pre-Built Extension Folder** | **[`release/BUDDY-Chrome-Extension`](release/BUDDY-Chrome-Extension)** | Ready to "Load unpacked" immediately |
+| **🦊 Firefox MV3 Add-on** | **[Download BUDDY-v1.0.0-Firefox.zip](https://github.com/SanthaKumar-K-2004/BUDDY/raw/main/release/BUDDY-v1.0.0-Firefox.zip)** | Direct Firefox MV3 install package |
+| **⭐ GitHub Repository** | **[SanthaKumar-K-2004/BUDDY](https://github.com/SanthaKumar-K-2004/BUDDY)** | Source code, issues & contributions |
+| **🏷️ GitHub Releases** | **[Latest Releases](https://github.com/SanthaKumar-K-2004/BUDDY/releases)** | Official tagged releases & changelogs |
+
+<br/>
+
 <p align="center">
   <img src="assets/buddy-hero.jpg" alt="Buddy 3D Digital Companion and Suite Illustration" width="840" style="border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);" />
 </p>
@@ -22,10 +34,11 @@
 </p>
 
 <p align="center">
+  <a href="#-visual-showcase--live-experience">Visual Showcase</a> •
   <a href="#key-modules">Modules</a> •
   <a href="#core-pillars">Core Pillars</a> •
   <a href="#system-architecture">Architecture</a> •
-  <a href="#quick-start">Quick Start</a> •
+  <a href="#-quick-start--installation">Quick Start</a> •
   <a href="#testing--quality-assurance">Testing</a> •
   <a href="#author--creator">Author</a> •
   <a href="#license">License</a>
@@ -42,6 +55,39 @@ Modern browsing is engineered for compulsive engagement—dark patterns, algorit
 **BUDDY** is an open-source, zero-cost, enterprise-grade digital wellness suite built from the ground up on Manifest V3. Unlike commercial screen-time trackers and website blockers that upload your private browsing history to cloud servers or lock essential safeguards behind costly monthly paywalls, **BUDDY executes 100% on your device**.
 
 Zero remote servers. Zero telemetry. Zero API keys. Total sovereignty.
+
+---
+
+## 📸 Visual Showcase & Live Experience
+
+BUDDY combines high-precision attention engineering with rich, human-centered aesthetics:
+
+<table width="100%">
+  <tr>
+    <td width="50%" align="center" valign="top">
+      <h4>🐾 Interactive Corgi Companion & Popup UI</h4>
+      <img src="docs/screenshots/live-buddy-popup.png" alt="Interactive Corgi Pet Companion Popup" width="380" style="border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.25);" />
+      <p><i>Organic cursor-following eyes, acoustic chime feedback, real-time energy & streak levels, quick shield toggles, and warm dialogue.</i></p>
+    </td>
+    <td width="50%" align="center" valign="top">
+      <h4>📊 Executive "Today's Activity" Console</h4>
+      <img src="docs/screenshots/live-today-1m-verified.png" alt="Today's Activity Console with 1m Live Media Tracking" width="380" style="border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.25);" />
+      <p><i>Sleek horizontal timeline bar, accurate 1-minute video/media tracking, clean metric pills, zero bulky box clutter.</i></p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center" valign="top">
+      <h4>🎬 Real-Time YouTube Media & Ad Blocking</h4>
+      <img src="docs/screenshots/live-youtube-validation.png" alt="Live YouTube Playback & Ad Blocking Engine" width="380" style="border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.25);" />
+      <p><i>True playback state detection (pauses on buffer/pause, advances on play), short feeds regulation, and ad suppression.</i></p>
+    </td>
+    <td width="50%" align="center" valign="top">
+      <h4>🛡️ Threat Defense & Distraction-Free Reading</h4>
+      <img src="docs/screenshots/live-reading-validation.png" alt="Distraction Free Reading Shield" width="380" style="border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.25);" />
+      <p><i>DeclarativeNetRequest ad & tracker blocker, adult content protection, and peaceful readability overlays.</i></p>
+    </td>
+  </tr>
+</table>
 
 ---
 
@@ -180,44 +226,61 @@ We believe that digital wellness software should never become spyware. Buddy adh
 
 ## 🚀 Quick Start & Installation
 
-### Prerequisites
-- **Node.js**: v22.0.0 or higher
-- **pnpm**: v12.0.0 or higher (or `corepack enable pnpm`)
-- **Browser**: Google Chrome (v116+), Chromium, Brave, Microsoft Edge, or Mozilla Firefox (v120+)
+### 📥 1. Instant Install (No Coding Required)
 
-### 🚀 Instant Install (100% Free & No Coding Required)
+Anyone can install and run BUDDY in less than 60 seconds on any Chromium browser (Chrome, Brave, Edge, Opera, Vivaldi) or Firefox!
 
-#### For Google Chrome, Brave Browser, Microsoft Edge & Opera:
-1. **Choose the Extension Folder:**
-   - If using this repository directly, the ready-to-load folder is:
-     👉 `release/BUDDY-Chrome-Extension` (or `apps/buddy-dashboard/.output/chrome-mv3`)
-   - If you downloaded `BUDDY-v1.0.0-Chrome.zip`:
-     Right-click the ZIP file and select **"Extract Here"**. This creates an extracted folder containing `manifest.json`.
-2. **Open Extensions Page:**
-   - In **Chrome**: Go to `chrome://extensions/`
-   - In **Brave**: Go to `brave://extensions/`
-   - In **Edge**: Go to `edge://extensions/`
-3. **Enable Developer Mode:**
-   - Toggle the **Developer mode** switch in the top-right corner to **ON**.
-4. **Load the Extension:**
+#### 📦 Step-by-Step for Chrome, Brave Browser & Microsoft Edge:
+
+1. **Download the Extension Package:**
+   - 📥 **[Click Here to Download BUDDY-v1.0.0-Chrome.zip](https://github.com/SanthaKumar-K-2004/BUDDY/raw/main/release/BUDDY-v1.0.0-Chrome.zip)**
+   - *Or if you cloned this repository, the pre-built unpacked folder is already ready at `release/BUDDY-Chrome-Extension`.*
+
+2. **Extract the ZIP Archive:**
+   - Right-click `BUDDY-v1.0.0-Chrome.zip` and choose **"Extract All..."** or **"Extract Here"**.
+   - After extracting, you will have a folder named `BUDDY-Chrome-Extension` (or `BUDDY-v1.0.0-Chrome`).
+
+```text
+📂 Correct Folder Structure to Select:
+BUDDY-Chrome-Extension/          <--- 🎯 SELECT THIS FOLDER IN CHROME!
+  ├── manifest.json              <--- (Chrome checks for this file directly inside)
+  ├── background.js
+  ├── popup.html
+  ├── sidepanel.html
+  ├── icons/
+  └── rulesets/
+```
+
+3. **Open Extensions in Your Browser:**
+   - **Google Chrome**: Enter `chrome://extensions/` in the URL address bar.
+   - **Brave Browser**: Enter `brave://extensions/` in the URL address bar.
+   - **Microsoft Edge**: Enter `edge://extensions/` in the URL address bar.
+
+4. **Enable Developer Mode:**
+   - In the top-right corner of the Extensions page, switch the **"Developer mode"** toggle to **ON**.
+
+5. **Load Unpacked Extension:**
    - Click the **"Load unpacked"** button in the top-left corner.
-   - ⚠️ **IMPORTANT:** In the folder picker, select the **`BUDDY-Chrome-Extension`** folder (the folder that directly contains `manifest.json`).
-   - *Do NOT select the parent `release` folder or the `.zip` file itself!*
-5. **Pin and Enjoy:**
-   - Click the puzzle piece icon 🧩 in your browser toolbar and pin **BUDDY**!
+   - In the folder picker dialog, select the **`BUDDY-Chrome-Extension`** folder (the folder containing `manifest.json`).
 
-> [!TIP]
-> **Troubleshooting: "Manifest file is missing or unreadable"**
-> If Chrome displays this error, it means you selected a parent folder (like `release`) or an unextracted zip file. Chrome requires you to select the inner folder where `manifest.json` resides directly:
-> **Path to select:** `BUDDY/release/BUDDY-Chrome-Extension`
+> [!WARNING]
+> **Avoid "Manifest file is missing or unreadable" Error:**
+> - ❌ **Do NOT select the `.zip` file** directly without unzipping.
+> - ❌ **Do NOT select the outer parent folder** (e.g., `release` or `Desktop`).
+> - ✅ **DO select the inner folder** (`BUDDY-Chrome-Extension`) where `manifest.json` is located.
+
+6. **Pin BUDDY to Toolbar:**
+   - Click the puzzle icon 🧩 in your browser toolbar, find **BUDDY**, and click the Pin 📌 icon.
+   - Enjoy your privacy-first digital wellness companion!
 
 ---
 
-#### For Mozilla Firefox:
-1. Open Firefox and navigate to `about:debugging#/runtime/this-firefox`.
-2. Click **"Load Temporary Add-on..."**.
-3. In the file dialog, open `release/BUDDY-Firefox-Extension` and select the **`manifest.json`** file.
-4. BUDDY is instantly active with all shield and wellbeing features!
+#### 🦊 For Mozilla Firefox:
+1. Download **[BUDDY-v1.0.0-Firefox.zip](https://github.com/SanthaKumar-K-2004/BUDDY/raw/main/release/BUDDY-v1.0.0-Firefox.zip)** or use `release/BUDDY-Firefox-Extension`.
+2. Open Firefox and navigate to `about:debugging#/runtime/this-firefox`.
+3. Click **"Load Temporary Add-on..."**.
+4. In the file dialog, navigate into `release/BUDDY-Firefox-Extension` and select the **`manifest.json`** file.
+5. BUDDY is instantly active with all shields, attention guards, and local analytics!
 
 ---
 

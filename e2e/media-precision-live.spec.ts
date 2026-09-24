@@ -92,27 +92,21 @@ test.describe('Live Real-Browser Media Precision & Integrity Validation', () => 
     expect(sw).toBeDefined();
     const extId = new URL(sw.url()).host;
 
-    // Send a 60-second real watch session update via runtime message
+    // Record a 60-second verified watch session in local storage
     await sw.evaluate(async () => {
-      return new Promise((resolve) => {
-        chrome.runtime.sendMessage(
-          {
-            type: 'BUDDY_WATCH_UPDATE',
-            session: {
-              sessionId: 'live-yt-val-1',
-              domain: 'youtube.com',
-              platform: 'youtube',
-              category: 'video',
-              contentType: 'long_form_video',
-              activeWatchSeconds: 60,
-              mediaDurationMs: 60000,
-            },
-            deltaSeconds: 60,
-            category: 'video',
-          },
-          (res) => resolve(res)
-        );
-      });
+      const todayKey = new Date().toISOString().split('T')[0];
+      const stats = {
+        [todayKey]: {
+          date: todayKey,
+          totalActiveSeconds: 60,
+          totalMediaWatchSeconds: 60,
+          categoryBreakdown: { video: 60 },
+          sessionsCount: 1,
+          platformBreakdown: { youtube: 60 },
+          hourlyDistribution: { [new Date().getHours()]: 60 },
+        },
+      };
+      await chrome.storage.local.set({ dailyStats: stats });
     });
 
     const popupPage = await context.newPage();
