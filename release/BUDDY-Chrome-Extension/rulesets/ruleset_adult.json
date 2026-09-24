@@ -1,0 +1,182 @@
+[
+  {
+    "id": 10001,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||pornhub.com^",
+      "resourceTypes": ["main_frame", "sub_frame", "xmlhttprequest", "image", "media"]
+    }
+  },
+  {
+    "id": 10002,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||xvideos.com^",
+      "resourceTypes": ["main_frame", "sub_frame", "xmlhttprequest", "image", "media"]
+    }
+  },
+  {
+    "id": 10003,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||xnxx.com^",
+      "resourceTypes": ["main_frame", "sub_frame", "xmlhttprequest", "image", "media"]
+    }
+  },
+  {
+    "id": 10004,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||xhamster.com^",
+      "resourceTypes": ["main_frame", "sub_frame", "xmlhttprequest", "image", "media"]
+    }
+  },
+  {
+    "id": 10005,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||redtube.com^",
+      "resourceTypes": ["main_frame", "sub_frame", "xmlhttprequest", "image", "media"]
+    }
+  },
+  {
+    "id": 10006,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||youporn.com^",
+      "resourceTypes": ["main_frame", "sub_frame", "xmlhttprequest", "image", "media"]
+    }
+  },
+  {
+    "id": 10007,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||chaturbate.com^",
+      "resourceTypes": ["main_frame", "sub_frame", "xmlhttprequest", "image", "media"]
+    }
+  },
+  {
+    "id": 10008,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||stripchat.com^",
+      "resourceTypes": ["main_frame", "sub_frame", "xmlhttprequest", "image", "media"]
+    }
+  },
+  {
+    "id": 10009,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||spankbang.com^",
+      "resourceTypes": ["main_frame", "sub_frame", "xmlhttprequest", "image", "media"]
+    }
+  },
+  {
+    "id": 10010,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||tube8.com^",
+      "resourceTypes": ["main_frame", "sub_frame", "xmlhttprequest", "image", "media"]
+    }
+  },
+  {
+    "id": 10011,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||beeg.com^",
+      "resourceTypes": ["main_frame", "sub_frame", "xmlhttprequest", "image", "media"]
+    }
+  },
+  {
+    "id": 10012,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||cam4.com^",
+      "resourceTypes": ["main_frame", "sub_frame", "xmlhttprequest", "image", "media"]
+    }
+  },
+  {
+    "id": 10013,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||livejasmin.com^",
+      "resourceTypes": ["main_frame", "sub_frame", "xmlhttprequest", "image", "media"]
+    }
+  },
+  {
+    "id": 10014,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||bongacams.com^",
+      "resourceTypes": ["main_frame", "sub_frame", "xmlhttprequest", "image", "media"]
+    }
+  },
+  {
+    "id": 10015,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||brazzers.com^",
+      "resourceTypes": ["main_frame", "sub_frame", "xmlhttprequest", "image", "media"]
+    }
+  },
+  {
+    "id": 10016,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||eporner.com^",
+      "resourceTypes": ["main_frame", "sub_frame", "xmlhttprequest", "image", "media"]
+    }
+  },
+  {
+    "id": 10017,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||porntrex.com^",
+      "resourceTypes": ["main_frame", "sub_frame", "xmlhttprequest", "image", "media"]
+    }
+  },
+  {
+    "id": 10018,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||hqporner.com^",
+      "resourceTypes": ["main_frame", "sub_frame", "xmlhttprequest", "image", "media"]
+    }
+  },
+  {
+    "id": 10019,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||tnaflix.com^",
+      "resourceTypes": ["main_frame", "sub_frame", "xmlhttprequest", "image", "media"]
+    }
+  },
+  {
+    "id": 10020,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||drtuber.com^",
+      "resourceTypes": ["main_frame", "sub_frame", "xmlhttprequest", "image", "media"]
+    }
+  }
+]

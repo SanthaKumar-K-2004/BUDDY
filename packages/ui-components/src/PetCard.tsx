@@ -1,6 +1,6 @@
+import { useState, useEffect } from 'preact/hooks';
 import type { PetVisualState } from '@buddy/shared-types';
-import { Card } from './Card';
-import { Badge } from './Badge';
+import { Card } from './Card.js';
 
 export interface PetCardProps {
   name?: string;
@@ -8,6 +8,8 @@ export interface PetCardProps {
   dialogue?: string;
   score?: number;
   className?: string;
+  interactive?: boolean;
+  onInteraction?: (action: 'pet' | 'treat' | 'boost' | 'rest') => void;
 }
 
 function getPetStateColor(state: PetVisualState): string {
@@ -30,229 +32,442 @@ function getPetStateColor(state: PetVisualState): string {
       return '#64748b'; // Slate
     case 'neutral':
     default:
-      return '#3b82f6'; // Blue
+      return '#38bdf8'; // Sky Blue
   }
 }
 
 function getPetTitle(state: PetVisualState): string {
   switch (state) {
-    case 'focused': return 'Deep in the Zone';
-    case 'happy': return 'Feeling Wonderful';
-    case 'ecstatic': return 'On Top of the World!';
-    case 'tired': return 'Recharge Needed';
+    case 'focused': return 'Deep in Focus';
+    case 'happy': return 'Feeling Great';
+    case 'ecstatic': return 'Super Energized!';
+    case 'tired': return 'Needs a Break';
     case 'distracted': return 'Mind Wandering';
-    case 'recovering': return 'Catching Breath';
-    case 'sleeping': return 'Peaceful Slumber';
+    case 'recovering': return 'Regaining Energy';
+    case 'sleeping': return 'Quiet Slumber';
     case 'worried': return 'Feeling Strained';
-    case 'sad': return 'Low Spirits';
+    case 'sad': return 'Needs Care';
     case 'neutral':
     default:
-      return 'Ready to Accompany You';
+      return 'Guardian Companion';
   }
 }
 
 export function PetCard({
   name = 'Buddy',
   visualState,
-  dialogue = "I'm right here with you! Let's build healthy habits together.",
-  score,
+  dialogue: initialDialogue = "I'm your wellness guardian! Let's protect your focus and digital peace.",
+  score = 80,
   className = '',
+  interactive = true,
+  onInteraction,
 }: PetCardProps) {
   const accentColor = getPetStateColor(visualState);
   const stateTitle = getPetTitle(visualState);
 
+  const [activeDialogue, setActiveDialogue] = useState(initialDialogue);
+  const [animType, setAnimType] = useState<'idle' | 'wiggle' | 'bounce' | 'glow' | 'sleep'>('idle');
+  const [particles, setParticles] = useState<string[]>([]);
+  const [interactCooldown, setInteractCooldown] = useState(false);
+
+  useEffect(() => {
+    setActiveDialogue(initialDialogue);
+  }, [initialDialogue]);
+
+  const triggerAction = (type: 'pet' | 'treat' | 'boost' | 'rest') => {
+    if (interactCooldown) return;
+    setInteractCooldown(true);
+
+    if (type === 'pet') {
+      setAnimType('wiggle');
+      setParticles(['💖', '🐾', '✨']);
+      setActiveDialogue(`Purrr... ${name} loves being your companion! Keep up the great digital balance.`);
+    } else if (type === 'treat') {
+      setAnimType('bounce');
+      setParticles(['🍎', '⭐', '✨']);
+      setActiveDialogue(`Nom nom nom! Crisp and delicious! Digital energy and wellness replenished.`);
+    } else if (type === 'boost') {
+      setAnimType('glow');
+      setParticles(['⚡', '🎯', '🚀']);
+      setActiveDialogue(`Focus shields locked in! Let's conquer your tasks with zero distractions.`);
+    } else if (type === 'rest') {
+      setAnimType('sleep');
+      setParticles(['💤', '🌙', '☁️']);
+      setActiveDialogue(`Taking a peaceful mindful breath... Rest is essential for peak focus.`);
+    }
+
+    if (onInteraction) {
+      onInteraction(type);
+    }
+
+    setTimeout(() => {
+      setAnimType('idle');
+      setParticles([]);
+    }, 2200);
+
+    setTimeout(() => {
+      setInteractCooldown(false);
+    }, 150);
+  };
+
+  const animStyle =
+    animType === 'wiggle'
+      ? { animation: 'buddyWiggle 0.6s ease-in-out infinite' }
+      : animType === 'bounce'
+      ? { animation: 'buddyBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite' }
+      : animType === 'glow'
+      ? { animation: 'buddyGlow 1s ease-in-out infinite', filter: `drop-shadow(0 0 12px ${accentColor})` }
+      : animType === 'sleep'
+      ? { animation: 'buddyFloat 4s ease-in-out infinite', opacity: 0.85 }
+      : { animation: 'buddyFloat 3.5s ease-in-out infinite' };
+
   return (
     <Card className={`pet-card ${className}`}>
+      <style>{`
+        @keyframes buddyFloat {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-4px); }
+        }
+        @keyframes buddyBounce {
+          0%, 100% { transform: translateY(0px) scale(1); }
+          40% { transform: translateY(-10px) scale(1.06); }
+          70% { transform: translateY(-2px) scale(0.98); }
+        }
+        @keyframes buddyWiggle {
+          0%, 100% { transform: rotate(0deg); }
+          25% { transform: rotate(-6deg) scale(1.03); }
+          75% { transform: rotate(6deg) scale(1.03); }
+        }
+        @keyframes buddyGlow {
+          0%, 100% { transform: scale(1); filter: drop-shadow(0 0 8px ${accentColor}); }
+          50% { transform: scale(1.05); filter: drop-shadow(0 0 18px ${accentColor}); }
+        }
+        @keyframes floatP1 {
+          0% { opacity: 0; transform: translate(0, 0) scale(0.5); }
+          30% { opacity: 1; transform: translate(-14px, -16px) scale(1.2); }
+          100% { opacity: 0; transform: translate(-28px, -42px) scale(0.9); }
+        }
+        @keyframes floatP2 {
+          0% { opacity: 0; transform: translate(0, 0) scale(0.5); }
+          30% { opacity: 1; transform: translate(0px, -20px) scale(1.3); }
+          100% { opacity: 0; transform: translate(0px, -48px) scale(0.8); }
+        }
+        @keyframes floatP3 {
+          0% { opacity: 0; transform: translate(0, 0) scale(0.5); }
+          30% { opacity: 1; transform: translate(14px, -16px) scale(1.2); }
+          100% { opacity: 0; transform: translate(28px, -42px) scale(0.9); }
+        }
+        .buddy-action-pill {
+          transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+          background: rgba(255, 255, 255, 0.04);
+          border: 1px solid rgba(255, 255, 255, 0.07);
+          border-radius: 999px;
+          color: var(--buddy-text-main, #f8fafc);
+          padding: 6px 10px;
+          font-size: 11px;
+          font-weight: 600;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 5px;
+        }
+        .buddy-action-pill:hover {
+          background: rgba(255, 255, 255, 0.09);
+          border-color: rgba(255, 255, 255, 0.15);
+          transform: translateY(-2px);
+        }
+        .buddy-action-pill:active {
+          transform: translateY(0px) scale(0.96);
+        }
+      `}</style>
+
       <div
         role="region"
-        aria-label={`${name}'s status: ${stateTitle}. ${dialogue}`}
+        aria-label={`${name}'s status: ${stateTitle}. ${activeDialogue}`}
         style={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           textAlign: 'center',
-          padding: '12px 8px',
+          position: 'relative',
         }}
       >
-        {/* Companion SVG Avatar */}
+        {/* Floating Interaction Particles */}
+        {particles.length > 0 && (
+          <div
+            style={{
+              position: 'absolute',
+              top: '10px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              pointerEvents: 'none',
+              zIndex: 10,
+              fontSize: '22px',
+              display: 'flex',
+              gap: '12px',
+            }}
+          >
+            <span style={{ animation: 'floatP1 1.4s ease-out forwards' }}>{particles[0]}</span>
+            <span style={{ animation: 'floatP2 1.4s ease-out 0.1s forwards' }}>{particles[1]}</span>
+            <span style={{ animation: 'floatP3 1.4s ease-out 0.2s forwards' }}>{particles[2]}</span>
+          </div>
+        )}
+
+        {/* Ambient Radial Glow & Interactive Avatar */}
         <div
+          onClick={() => triggerAction('pet')}
+          title="Click to interact with Buddy!"
           style={{
-            width: '120px',
-            height: '120px',
-            marginBottom: '12px',
+            width: '115px',
+            height: '115px',
+            marginBottom: '6px',
             position: 'relative',
+            cursor: 'pointer',
+            background: `radial-gradient(circle, ${accentColor}22 0%, transparent 70%)`,
+            borderRadius: '50%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            ...animStyle,
           }}
         >
           <svg
             viewBox="0 0 120 120"
-            width="120"
-            height="120"
+            width="110"
+            height="110"
             aria-hidden="true"
             style={{
-              transition: 'transform 0.4s ease',
+              transition: 'transform 0.3s ease',
+              filter: `drop-shadow(0 4px 14px ${accentColor}44)`,
             }}
           >
-            {/* Background Halo */}
-            <circle cx="60" cy="60" r="54" fill={accentColor} opacity="0.12" />
+            {/* Halo ring */}
+            <circle cx="60" cy="60" r="52" fill="none" stroke={accentColor} strokeWidth="1.5" opacity="0.3" strokeDasharray="4 4" />
 
             {/* Antennas / Ears */}
             <path
               d="M 38 32 C 30 18, 22 24, 30 38"
               fill="none"
               stroke={accentColor}
-              strokeWidth="5"
+              strokeWidth="4.5"
               strokeLinecap="round"
             />
-            <circle cx="26" cy="22" r="4" fill={accentColor} />
+            <circle cx="26" cy="22" r="4.5" fill={accentColor} />
+            <circle cx="26" cy="22" r="1.5" fill="#ffffff" />
 
             <path
               d="M 82 32 C 90 18, 98 24, 90 38"
               fill="none"
               stroke={accentColor}
-              strokeWidth="5"
+              strokeWidth="4.5"
               strokeLinecap="round"
             />
-            <circle cx="94" cy="22" r="4" fill={accentColor} />
+            <circle cx="94" cy="22" r="4.5" fill={accentColor} />
+            <circle cx="94" cy="22" r="1.5" fill="#ffffff" />
 
-            {/* Body */}
+            {/* Smooth Metallic Armor Head */}
             <rect
-              x="25"
+              x="26"
               y="32"
-              width="70"
-              height="66"
-              rx="28"
-              ry="28"
-              fill="#ffffff"
+              width="68"
+              height="64"
+              rx="26"
+              ry="26"
+              fill="#141a29"
               stroke={accentColor}
-              strokeWidth="3.5"
+              strokeWidth="2.5"
+            />
+
+            {/* Inner Cyber Screen Face */}
+            <rect
+              x="32"
+              y="40"
+              width="56"
+              height="48"
+              rx="18"
+              ry="18"
+              fill="#080c14"
             />
 
             {/* Soft Cheeks */}
-            <circle cx="36" cy="68" r="6" fill="#f43f5e" opacity="0.25" />
-            <circle cx="84" cy="68" r="6" fill="#f43f5e" opacity="0.25" />
+            <circle cx="39" cy="67" r="4.5" fill="#f43f5e" opacity="0.4" />
+            <circle cx="81" cy="67" r="4.5" fill="#f43f5e" opacity="0.4" />
 
-            {/* Eyes & Facial Expression based on visualState */}
-            {visualState === 'focused' && (
+            {/* Facial Expression based on visualState / animType */}
+            {animType === 'sleep' || visualState === 'sleeping' ? (
               <g>
-                {/* Focus Band */}
-                <rect x="25" y="44" width="70" height="9" fill={accentColor} opacity="0.85" rx="3" />
-                <circle cx="44" cy="48" r="4" fill="#ffffff" />
-                <circle cx="76" cy="48" r="4" fill="#ffffff" />
-                {/* Determined Eyes */}
-                <circle cx="44" cy="60" r="4.5" fill="#0f172a" />
-                <circle cx="76" cy="60" r="4.5" fill="#0f172a" />
-                {/* Confident Smile */}
-                <path d="M 52 72 Q 60 77 68 72" fill="none" stroke="#0f172a" strokeWidth="2.5" strokeLinecap="round" />
+                <line x1="39" y1="59" x2="49" y2="59" stroke="#a78bfa" strokeWidth="2.5" strokeLinecap="round" />
+                <line x1="71" y1="59" x2="81" y2="59" stroke="#a78bfa" strokeWidth="2.5" strokeLinecap="round" />
+                <path d="M 55 70 Q 60 72 65 70" fill="none" stroke="#a78bfa" strokeWidth="2" strokeLinecap="round" />
+                <text x="88" y="38" fill="#a78bfa" fontSize="12" fontWeight="bold">Z</text>
+                <text x="96" y="28" fill="#a78bfa" fontSize="10" fontWeight="bold">z</text>
               </g>
-            )}
-
-            {(visualState === 'happy' || visualState === 'ecstatic') && (
+            ) : animType === 'bounce' || animType === 'wiggle' || visualState === 'happy' || visualState === 'ecstatic' ? (
               <g>
-                {/* Happy curved eyes ^ ^ */}
-                <path d="M 38 58 Q 44 50 50 58" fill="none" stroke="#0f172a" strokeWidth="3" strokeLinecap="round" />
-                <path d="M 70 58 Q 76 50 82 58" fill="none" stroke="#0f172a" strokeWidth="3" strokeLinecap="round" />
-                {/* Big Cheerful Smile */}
-                <path d="M 48 70 Q 60 84 72 70 Z" fill="#f43f5e" stroke="#0f172a" strokeWidth="2" />
+                <path d="M 39 57 Q 45 47 51 57" fill="none" stroke="#34d399" strokeWidth="3" strokeLinecap="round" />
+                <path d="M 69 57 Q 75 47 81 57" fill="none" stroke="#34d399" strokeWidth="3" strokeLinecap="round" />
+                <path d="M 49 68 Q 60 82 71 68 Z" fill="#f43f5e" stroke="#ffffff" strokeWidth="1" />
               </g>
-            )}
-
-            {visualState === 'tired' && (
+            ) : visualState === 'focused' || animType === 'glow' ? (
               <g>
-                {/* Drooping sleepy eyes */}
-                <path d="M 38 58 Q 44 64 50 58" fill="none" stroke="#64748b" strokeWidth="3" strokeLinecap="round" />
-                <path d="M 70 58 Q 76 64 82 58" fill="none" stroke="#64748b" strokeWidth="3" strokeLinecap="round" />
-                {/* Yawn mouth */}
-                <ellipse cx="60" cy="74" rx="4" ry="6" fill="#64748b" />
+                <rect x="32" y="44" width="56" height="6" fill={accentColor} opacity="0.85" rx="3" />
+                <circle cx="45" cy="47" r="2.5" fill="#ffffff" />
+                <circle cx="75" cy="47" r="2.5" fill="#ffffff" />
+                <circle cx="44" cy="59" r="4.5" fill="#38bdf8" />
+                <circle cx="76" cy="59" r="4.5" fill="#38bdf8" />
+                <circle cx="45" cy="58" r="1.5" fill="#ffffff" />
+                <circle cx="77" cy="58" r="1.5" fill="#ffffff" />
+                <path d="M 53 71 Q 60 75 67 71" fill="none" stroke="#38bdf8" strokeWidth="2" strokeLinecap="round" />
               </g>
-            )}
-
-            {visualState === 'distracted' && (
+            ) : visualState === 'tired' ? (
               <g>
-                {/* Wandering Swirly Eyes */}
-                <circle cx="42" cy="58" r="5" fill="none" stroke="#ec4899" strokeWidth="2" />
-                <circle cx="42" cy="58" r="2" fill="#ec4899" />
-                <circle cx="78" cy="58" r="5" fill="none" stroke="#ec4899" strokeWidth="2" />
-                <circle cx="78" cy="58" r="2" fill="#ec4899" />
-                {/* Wobbly mouth */}
-                <path d="M 50 73 Q 56 69 60 73 T 70 73" fill="none" stroke="#0f172a" strokeWidth="2.5" strokeLinecap="round" />
+                <path d="M 39 57 Q 45 63 51 57" fill="none" stroke="#fbbf24" strokeWidth="2.5" strokeLinecap="round" />
+                <path d="M 69 57 Q 75 63 81 57" fill="none" stroke="#fbbf24" strokeWidth="2.5" strokeLinecap="round" />
+                <ellipse cx="60" cy="73" rx="3.5" ry="4.5" fill="#fbbf24" />
               </g>
-            )}
-
-            {visualState === 'recovering' && (
+            ) : visualState === 'distracted' ? (
               <g>
-                {/* Gentle peaceful resting eyes */}
-                <path d="M 38 60 Q 44 57 50 60" fill="none" stroke="#0891b2" strokeWidth="2.5" strokeLinecap="round" />
-                <path d="M 70 60 Q 76 57 82 60" fill="none" stroke="#0891b2" strokeWidth="2.5" strokeLinecap="round" />
-                {/* Soft warm smile */}
-                <path d="M 52 72 Q 60 77 68 72" fill="none" stroke="#0891b2" strokeWidth="2" strokeLinecap="round" />
-                {/* Sparkle */}
-                <path d="M 94 48 L 96 42 L 98 48 L 104 50 L 98 52 L 96 58 L 94 52 L 88 50 Z" fill="#06b6d4" />
+                <circle cx="44" cy="58" r="4.5" fill="none" stroke="#f472b6" strokeWidth="2" />
+                <circle cx="44" cy="58" r="1.5" fill="#f472b6" />
+                <circle cx="76" cy="58" r="4.5" fill="none" stroke="#f472b6" strokeWidth="2" />
+                <circle cx="76" cy="58" r="1.5" fill="#f472b6" />
+                <path d="M 51 72 Q 56 68 60 72 T 69 72" fill="none" stroke="#f472b6" strokeWidth="2" strokeLinecap="round" />
               </g>
-            )}
-
-            {visualState === 'sleeping' && (
+            ) : (
               <g>
-                {/* Slumber closed eyes */}
-                <line x1="38" y1="60" x2="50" y2="60" stroke="#8b5cf6" strokeWidth="3" strokeLinecap="round" />
-                <line x1="70" y1="60" x2="82" y2="60" stroke="#8b5cf6" strokeWidth="3" strokeLinecap="round" />
-                {/* Peaceful line mouth */}
-                <path d="M 54 72 Q 60 74 66 72" fill="none" stroke="#8b5cf6" strokeWidth="2" strokeLinecap="round" />
-                {/* Zzz indicators */}
-                <text x="88" y="38" fill="#8b5cf6" fontSize="12" fontWeight="bold">Z</text>
-                <text x="96" y="28" fill="#8b5cf6" fontSize="10" fontWeight="bold">z</text>
-                <text x="102" y="20" fill="#8b5cf6" fontSize="8" fontWeight="bold">z</text>
-              </g>
-            )}
-
-            {(visualState === 'neutral' || visualState === 'worried' || visualState === 'sad') && (
-              <g>
-                {/* Neutral/soft round eyes */}
-                <circle cx="44" cy="58" r="4.5" fill="#0f172a" />
-                <circle cx="76" cy="58" r="4.5" fill="#0f172a" />
-                {visualState === 'worried' ? (
-                  <path d="M 50 74 Q 60 68 70 74" fill="none" stroke="#0f172a" strokeWidth="2.5" strokeLinecap="round" />
-                ) : visualState === 'sad' ? (
-                  <path d="M 52 75 Q 60 70 68 75" fill="none" stroke="#64748b" strokeWidth="2.5" strokeLinecap="round" />
-                ) : (
-                  <path d="M 52 71 Q 60 76 68 71" fill="none" stroke="#0f172a" strokeWidth="2.5" strokeLinecap="round" />
-                )}
+                <circle cx="44" cy="58" r="4.5" fill="#38bdf8" />
+                <circle cx="76" cy="58" r="4.5" fill="#38bdf8" />
+                <circle cx="45.5" cy="56.5" r="1.5" fill="#ffffff" />
+                <circle cx="77.5" cy="56.5" r="1.5" fill="#ffffff" />
+                <path d="M 53 71 Q 60 75 67 71" fill="none" stroke="#38bdf8" strokeWidth="2" strokeLinecap="round" />
               </g>
             )}
           </svg>
         </div>
 
-        {/* Identity & Current State */}
+        {/* Identity & Status */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-          <span style={{ fontSize: '18px', fontWeight: 700, color: 'var(--buddy-text-main, #0f172a)' }}>
+          <span style={{ fontSize: '15px', fontWeight: 800, color: 'var(--buddy-text-main, #f8fafc)', letterSpacing: '-0.3px' }}>
             {name}
           </span>
-          <Badge variant={score !== undefined && score >= 60 ? 'success' : 'neutral'}>
+          <span
+            style={{
+              fontSize: '11px',
+              padding: '2px 8px',
+              borderRadius: '999px',
+              backgroundColor: `${accentColor}1a`,
+              color: accentColor,
+              fontWeight: 600,
+              border: `1px solid ${accentColor}33`,
+            }}
+          >
             {stateTitle}
-          </Badge>
+          </span>
         </div>
 
-        {/* Dialogue Bubble */}
+        {/* Organic Floating Dialogue (No Box Look) */}
         <div
           style={{
+            width: '100%',
             maxWidth: '320px',
-            padding: '10px 14px',
-            backgroundColor: 'var(--buddy-bg-subtle, #f8fafc)',
-            borderRadius: 'var(--buddy-radius-md, 8px)',
-            border: '1px solid var(--buddy-border-subtle, #e2e8f0)',
-            fontSize: '13px',
-            color: 'var(--buddy-text-main, #334155)',
-            lineHeight: '1.4',
-            marginBottom: '8px',
+            padding: '8px 12px',
+            backgroundColor: 'rgba(255, 255, 255, 0.025)',
+            borderRadius: '12px',
+            border: '1px solid rgba(255, 255, 255, 0.05)',
+            fontSize: '12px',
+            color: 'var(--buddy-text-muted, #cbd5e1)',
+            lineHeight: '1.45',
+            marginBottom: '10px',
+            boxSizing: 'border-box',
+            fontStyle: 'italic',
           }}
         >
-          "{dialogue}"
+          "{activeDialogue}"
         </div>
 
-        {score !== undefined && (
-          <div style={{ fontSize: '11px', color: 'var(--buddy-text-muted, #64748b)' }}>
-            Current Mood Harmony: <strong>{Math.round(score)} / 100</strong>
+        {/* Interactive Companion Pill Actions */}
+        {interactive && (
+          <div
+            style={{
+              display: 'flex',
+              gap: '6px',
+              justifyContent: 'center',
+              width: '100%',
+              maxWidth: '320px',
+              marginBottom: '10px',
+              flexWrap: 'wrap',
+            }}
+          >
+            <button
+              type="button"
+              className="buddy-action-pill buddy-action-btn"
+              onClick={() => triggerAction('pet')}
+              title="Give Buddy a loving pet"
+            >
+              🐾 Pet
+            </button>
+            <button
+              type="button"
+              className="buddy-action-pill buddy-action-btn"
+              onClick={() => triggerAction('treat')}
+              title="Feed Buddy a healthy treat"
+            >
+              🍎 Treat
+            </button>
+            <button
+              type="button"
+              className="buddy-action-pill buddy-action-btn"
+              onClick={() => triggerAction('boost')}
+              title="Engage Focus Boost"
+            >
+              ⚡ Boost
+            </button>
+            <button
+              type="button"
+              className="buddy-action-pill buddy-action-btn"
+              onClick={() => triggerAction('rest')}
+              title="Encourage a calming pause"
+            >
+              😴 Rest
+            </button>
           </div>
         )}
+
+        {/* Digital Harmony Bar */}
+        <div style={{ width: '100%', maxWidth: '320px' }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              fontSize: '11px',
+              color: 'var(--buddy-text-muted, #94a3b8)',
+              marginBottom: '4px',
+            }}
+          >
+            <span>Digital Harmony</span>
+            <strong style={{ color: accentColor }}>{Math.round(score)}%</strong>
+          </div>
+          <div
+            style={{
+              width: '100%',
+              height: '4px',
+              backgroundColor: 'rgba(255, 255, 255, 0.06)',
+              borderRadius: '999px',
+              overflow: 'hidden',
+            }}
+          >
+            <div
+              style={{
+                width: `${Math.max(5, Math.min(100, score))}%`,
+                height: '100%',
+                backgroundColor: accentColor,
+                borderRadius: '999px',
+                transition: 'width 0.4s ease',
+              }}
+            />
+          </div>
+        </div>
       </div>
     </Card>
   );

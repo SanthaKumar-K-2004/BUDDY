@@ -1,8 +1,3 @@
-/**
- * @buddy/ui-components - StatCard.tsx
- * Clean, accessible metric card displaying primary KPIs.
- */
-
 import type { ComponentChildren } from 'preact';
 
 export interface StatCardProps {
@@ -40,7 +35,7 @@ export function StatCard({
   subtext,
   icon,
   trend,
-  accentColor,
+  accentColor = '#6366f1',
   children,
 }: StatCardProps) {
   const displayTitle = title || label || '';
@@ -56,37 +51,56 @@ export function StatCard({
     <div
       className="buddy-stat-card"
       style={{
-        backgroundColor: 'var(--buddy-bg-card)',
-        borderRadius: 'var(--buddy-radius-md)',
-        border: '1px solid var(--buddy-border-subtle)',
-        borderLeft: accentColor ? `4px solid ${accentColor}` : '1px solid var(--buddy-border-subtle)',
-        padding: '12px 14px',
-        boxShadow: 'var(--buddy-shadow-sm)',
+        backgroundColor: 'var(--buddy-bg-card, rgba(255, 255, 255, 0.035))',
+        borderRadius: '12px',
+        border: '1px solid var(--buddy-border-subtle, rgba(255, 255, 255, 0.07))',
+        borderTop: accentColor ? `2px solid ${accentColor}` : undefined,
+        padding: '10px 12px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
         flex: 1,
-        minWidth: '100px',
+        minWidth: '85px',
+        position: 'relative',
+        overflow: 'hidden',
+        transition: 'transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease',
       }}
     >
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-        <span style={{ fontSize: '11px', fontWeight: 500, color: 'var(--buddy-text-muted)' }}>{displayTitle}</span>
-        {icon && <span style={{ fontSize: '16px' }} aria-hidden="true">{icon}</span>}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+        <span
+          style={{
+            fontSize: '10px',
+            fontWeight: 600,
+            textTransform: 'uppercase',
+            letterSpacing: '0.6px',
+            color: 'var(--buddy-text-muted, #94a3b8)',
+          }}
+        >
+          {displayTitle}
+        </span>
+        {icon && <span style={{ fontSize: '14px', opacity: 0.8 }} aria-hidden="true">{icon}</span>}
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
-        <span style={{ fontSize: '20px', fontWeight: 700, color: 'var(--buddy-text-main)', letterSpacing: '-0.5px' }}>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
+        <span
+          style={{
+            fontSize: '18px',
+            fontWeight: 800,
+            color: 'var(--buddy-text-main, #f8fafc)',
+            letterSpacing: '-0.4px',
+          }}
+        >
           {displayValue}
         </span>
         {trend && (
-          <span style={{ fontSize: '11px', color: 'var(--buddy-accent-green)', fontWeight: 600 }}>
+          <span style={{ fontSize: '10px', color: 'var(--buddy-success, #10b981)', fontWeight: 600 }}>
             {trend}
           </span>
         )}
       </div>
 
       {subtext && (
-        <span style={{ fontSize: '10px', color: 'var(--buddy-text-muted)', marginTop: '4px' }}>
+        <span style={{ fontSize: '10px', color: 'var(--buddy-text-muted, #64748b)', marginTop: '2px' }}>
           {subtext}
         </span>
       )}

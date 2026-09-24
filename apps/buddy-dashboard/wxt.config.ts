@@ -22,11 +22,28 @@ export default defineConfig({
           enabled: true,
           path: 'rulesets/ruleset_trackers.json',
         },
+        {
+          id: 'ruleset_adult',
+          enabled: true,
+          path: 'rulesets/ruleset_adult.json',
+        },
       ],
     },
+    icons: {
+      '16': 'icons/icon-16.png',
+      '32': 'icons/icon-32.png',
+      '48': 'icons/icon-48.png',
+      '128': 'icons/icon-128.png',
+    },
     action: {
-      default_title: 'BUDDY',
+      default_title: 'BUDDY: All-in-One Digital Wellness & Shield',
       default_popup: 'entrypoints/popup/index.html',
+      default_icon: {
+        '16': 'icons/icon-16.png',
+        '32': 'icons/icon-32.png',
+        '48': 'icons/icon-48.png',
+        '128': 'icons/icon-128.png',
+      },
     },
     content_security_policy: {
       extension_pages: "script-src 'self'; object-src 'self';",

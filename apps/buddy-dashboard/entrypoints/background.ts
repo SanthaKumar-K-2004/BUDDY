@@ -318,6 +318,26 @@ export default defineBackground(() => {
       return false;
     }
 
+    // F. Handle Content Safety & Adult Content Blocks
+    if (rawMessage.type === 'CONTENT_SAFETY_EVENT') {
+      const domain = rawMessage.domain || 'restricted-content';
+      shieldEngine.stats.recordBlock({
+        siteId: domain,
+        category: 'ad',
+        source: 'content_safety',
+      });
+      aggregator.recordBlocked('ads', 1).catch(() => {});
+      sendResponse({ success: true });
+      return false;
+    }
+
+    if (rawMessage.type === 'RECORD_DOOMSCROLL') {
+      aggregator.recordDoomscrollAlert().catch(() => {});
+      moodEngine.applyStimulus(-5, 'Rapid doomscroll detected', 'buddy-focus');
+      sendResponse({ success: true });
+      return false;
+    }
+
     sendResponse({ status: 'ACKNOWLEDGED' });
     return false;
   });

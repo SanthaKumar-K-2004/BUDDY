@@ -71,12 +71,18 @@ export class AnalyticsAggregator {
     const platformStats: Record<string, PlatformSummary> = {};
     if (dayStats.platformStats) {
       for (const [platformId, pStat] of Object.entries(dayStats.platformStats)) {
+        const pActiveMs = pStat.activeSeconds * 1000;
+        const pMediaMs = pActiveMs > 0 ? Math.min(pStat.mediaSeconds * 1000, pActiveMs) : pStat.mediaSeconds * 1000;
+        const pSessions = pActiveMs > 0
+          ? Math.min(pStat.sessionsCount, Math.max(1, Math.ceil(pStat.activeSeconds / 60)))
+          : pStat.sessionsCount;
+
         platformStats[platformId] = {
           platform: pStat.platform,
-          activeMs: pStat.activeSeconds * 1000,
-          mediaMs: pStat.mediaSeconds * 1000,
-          shortFormMs: pStat.shortFormSeconds * 1000,
-          sessions: pStat.sessionsCount,
+          activeMs: pActiveMs,
+          mediaMs: pMediaMs,
+          shortFormMs: Math.min(pStat.shortFormSeconds * 1000, pActiveMs),
+          sessions: pSessions,
           limitsReached: pStat.limitsReachedCount,
         };
       }
@@ -96,17 +102,28 @@ export class AnalyticsAggregator {
       other: 0,
     };
 
+    // Sanitize: media playback cannot exceed active browsing time on standard video tabs
+    const totalActiveMs = dayStats.totalActiveSeconds * 1000;
+    const safeMediaMs = totalActiveMs > 0
+      ? Math.min(dayStats.totalMediaWatchSeconds * 1000, totalActiveMs)
+      : dayStats.totalMediaWatchSeconds * 1000;
+
+    // Sanitize runaway session counts from past heartbeat ticks
+    const safeSessions = totalActiveMs > 0
+      ? Math.min(dayStats.sessionsCount || 0, Math.max(1, Math.ceil(dayStats.totalActiveSeconds / 60)))
+      : (dayStats.sessionsCount || 0);
+
     return {
       date: dateStr,
-      totalActiveMs: dayStats.totalActiveSeconds * 1000,
-      mediaMs: dayStats.totalMediaWatchSeconds * 1000,
+      totalActiveMs,
+      mediaMs: safeMediaMs,
       focusMs: (dayStats.totalFocusSeconds || 0) * 1000,
       socialMs: (catSeconds.social || 0) * 1000,
       videoMs: (catSeconds.video || 0) * 1000,
       musicMs: (catSeconds.music || 0) * 1000,
       adsBlocked: dayStats.totalAdsBlocked || 0,
       trackersBlocked: dayStats.totalTrackersBlocked || 0,
-      sessions: dayStats.sessionsCount || 0,
+      sessions: safeSessions,
       limitsReached: dayStats.limitsReachedCount || 0,
       doomscrollAlerts: dayStats.doomscrollAlertsCount || 0,
       platformStats,
@@ -218,12 +235,23 @@ export class AnalyticsAggregator {
     category?: PlatformCategory,
     now: Date = new Date()
   ): Promise<void> {
+    const isIncremental = deltaSeconds !== undefined;
     const effDeltaSeconds = deltaSeconds ?? Math.floor((session.activeDurationMs || 0) / 1000);
     if (effDeltaSeconds <= 0) return;
 
     const effCategory = category ?? session.category ?? 'video';
-    const mediaSeconds = session.mediaDurationMs ? Math.floor(session.mediaDurationMs / 1000) : effDeltaSeconds;
-    const shortFormSeconds = session.shortFormDurationMs ? Math.floor(session.shortFormDurationMs / 1000) : 0;
+    const isShortForm = session.contentType === 'short_form';
+
+    // Prevent runaway accumulation:
+    // If incremental (e.g. 5-second heartbeats), add the delta seconds.
+    // If full session summary (no deltaSeconds passed), add the full session duration.
+    const mediaSeconds = isIncremental
+      ? effDeltaSeconds
+      : (session.mediaDurationMs ? Math.floor(session.mediaDurationMs / 1000) : effDeltaSeconds);
+
+    const shortFormSeconds = isIncremental
+      ? (isShortForm ? effDeltaSeconds : 0)
+      : (session.shortFormDurationMs ? Math.floor(session.shortFormDurationMs / 1000) : (isShortForm ? effDeltaSeconds : 0));
 
     const todayKey = formatDateKey(now);
     await this.storage.update('dailyStats', (allStats: StorageSchema['dailyStats']) => {
@@ -268,22 +296,38 @@ export class AnalyticsAggregator {
         limitsReachedCount: 0,
       };
 
-      const isShortForm = session.contentType === 'short_form' || shortFormSeconds > 0;
+      // Only increment session count for a brand new session, not on every 5s heartbeat
+      const shouldIncrementSession = !isIncremental || currentPlatform.sessionsCount === 0;
+
+      const pActiveSeconds = currentPlatform.activeSeconds + effDeltaSeconds;
+      const pMediaSeconds = Math.min(currentPlatform.mediaSeconds + mediaSeconds, pActiveSeconds);
+      const pSessionsCount = Math.min(
+        currentPlatform.sessionsCount + (shouldIncrementSession ? 1 : 0),
+        Math.max(1, Math.ceil(pActiveSeconds / 60))
+      );
 
       platformStats[session.platform] = {
         ...currentPlatform,
-        activeSeconds: currentPlatform.activeSeconds + effDeltaSeconds,
-        mediaSeconds: currentPlatform.mediaSeconds + mediaSeconds,
-        shortFormSeconds: currentPlatform.shortFormSeconds + (isShortForm ? (shortFormSeconds || effDeltaSeconds) : 0),
-        sessionsCount: currentPlatform.sessionsCount + 1,
+        activeSeconds: pActiveSeconds,
+        mediaSeconds: pMediaSeconds,
+        shortFormSeconds: Math.min(currentPlatform.shortFormSeconds + shortFormSeconds, pActiveSeconds),
+        sessionsCount: pSessionsCount,
       };
+
+      const shouldIncrementGlobalSession = !isIncremental || (current.sessionsCount || 0) === 0;
+      const totalActiveSeconds = current.totalActiveSeconds + effDeltaSeconds;
+      const totalMediaWatchSeconds = Math.min(current.totalMediaWatchSeconds + mediaSeconds, totalActiveSeconds);
+      const sessionsCount = Math.min(
+        (current.sessionsCount || 0) + (shouldIncrementGlobalSession ? 1 : 0),
+        Math.max(1, Math.ceil(totalActiveSeconds / 60))
+      );
 
       const updated: DailyStats = {
         ...current,
-        totalActiveSeconds: current.totalActiveSeconds + effDeltaSeconds,
-        totalMediaWatchSeconds: current.totalMediaWatchSeconds + mediaSeconds,
+        totalActiveSeconds,
+        totalMediaWatchSeconds,
         categorySeconds: updatedCategorySeconds,
-        sessionsCount: (current.sessionsCount || 0) + 1,
+        sessionsCount,
         platformStats,
       };
 

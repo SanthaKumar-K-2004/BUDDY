@@ -14,6 +14,26 @@ export default defineContentScript({
   runAt: 'document_idle',
   main() {
     const currentUrl = new URL(window.location.href);
+    const host = currentUrl.hostname.toLowerCase();
+    const pathname = currentUrl.pathname.toLowerCase();
+
+    // Automatic Adult & Pornographic Content Blocker
+    const ADULT_PATTERNS = [
+      'pornhub', 'xvideos', 'xnxx', 'xhamster', 'redtube', 'youporn', 'chaturbate',
+      'stripchat', 'spankbang', 'tube8', 'beeg', 'cam4', 'livejasmin', 'bongacams',
+      'brazzers', 'eporner', 'porntrex', 'hqporner', 'tnaflix', 'drtuber', 'porn',
+      'xxx', 'hentai', 'adultweb'
+    ];
+
+    const isAdult = ADULT_PATTERNS.some(
+      (p) => host === p || host.endsWith('.' + p) || host.includes(p + '.') || pathname.includes('/' + p)
+    );
+
+    if (isAdult) {
+      renderAdultBlock();
+      return;
+    }
+
     const adapter = defaultAdapterRegistry.resolve(currentUrl);
 
     console.log('[Buddy Focus] Active adapter:', adapter.name, 'on', currentUrl.hostname);
@@ -263,6 +283,82 @@ export default defineContentScript({
         toast.style.transition = 'opacity 0.5s ease';
         setTimeout(() => toast.remove(), 500);
       }, 5000);
+    }
+
+    function renderAdultBlock() {
+      try {
+        chrome.runtime.sendMessage({
+          type: 'CONTENT_SAFETY_EVENT',
+          domain: host,
+          category: 'porn',
+          actionTaken: 'blocked',
+        });
+      } catch {}
+
+      // Pause and mute all existing media
+      document.querySelectorAll('video, audio').forEach((el) => {
+        try {
+          (el as HTMLMediaElement).pause();
+          (el as HTMLMediaElement).src = '';
+        } catch {}
+      });
+
+      document.title = 'Content Blocked by BUDDY';
+
+      const blockOverlay = document.createElement('div');
+      blockOverlay.id = 'buddy-safe-shield';
+      blockOverlay.style.cssText = `
+        position: fixed !important;
+        inset: 0 !important;
+        z-index: 2147483647 !important;
+        background: #090d16 !important;
+        color: #f8fafc !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+        text-align: center !important;
+        padding: 24px !important;
+        box-sizing: border-box !important;
+      `;
+
+      blockOverlay.innerHTML = `
+        <div style="width: 80px; height: 80px; border-radius: 50%; background: rgba(99, 102, 241, 0.15); display: flex; align-items: center; justify-content: center; font-size: 40px; margin-bottom: 20px; border: 1px solid rgba(99, 102, 241, 0.3);">
+          🛡️
+        </div>
+        <h1 style="font-size: 26px; font-weight: 700; margin: 0 0 12px 0; color: #ffffff; letter-spacing: -0.5px;">
+          Restricted by BUDDY Content Guard
+        </h1>
+        <p style="font-size: 15px; color: #94a3b8; max-width: 480px; margin: 0 0 28px 0; line-height: 1.6;">
+          Explicit adult content has been automatically blocked on this page to protect your focus, privacy, and digital wellbeing.
+        </p>
+        <button id="buddy-safe-exit-btn" style="padding: 12px 28px; border-radius: 8px; border: none; background: #6366f1; color: #ffffff; font-weight: 600; cursor: pointer; font-size: 15px; box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4); transition: transform 0.15s ease;">
+          ← Return to Safe Browsing
+        </button>
+      `;
+
+      const mount = () => {
+        if (document.body) {
+          document.body.innerHTML = '';
+          document.body.appendChild(blockOverlay);
+        } else {
+          document.documentElement.appendChild(blockOverlay);
+        }
+
+        const exitBtn = document.getElementById('buddy-safe-exit-btn');
+        if (exitBtn) {
+          exitBtn.onclick = () => {
+            window.location.href = 'https://en.wikipedia.org';
+          };
+        }
+      };
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', mount);
+      } else {
+        mount();
+      }
     }
   },
 });
