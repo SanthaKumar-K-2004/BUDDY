@@ -187,12 +187,37 @@ We believe that digital wellness software should never become spyware. Buddy adh
 
 ### 🚀 Instant Install (100% Free & No Coding Required)
 
-1. Download the unified all-in-one release:
-   - **For Chrome / Brave / Edge:** Download [`release/BUDDY-v1.0.0-Chrome.zip`](release/BUDDY-v1.0.0-Chrome.zip)
-   - **For Mozilla Firefox:** Download [`release/BUDDY-v1.0.0-Firefox.zip`](release/BUDDY-v1.0.0-Firefox.zip)
-2. Extract the downloaded ZIP file into a folder on your computer.
-3. In Chrome/Brave/Edge: Navigate to `chrome://extensions/`, turn ON **Developer mode**, click **Load unpacked**, and select the extracted folder.
-4. Pin **BUDDY** to your toolbar and enjoy full protection, focus, pet, and family controls in one single extension!
+#### For Google Chrome, Brave Browser, Microsoft Edge & Opera:
+1. **Choose the Extension Folder:**
+   - If using this repository directly, the ready-to-load folder is:
+     👉 `release/BUDDY-Chrome-Extension` (or `apps/buddy-dashboard/.output/chrome-mv3`)
+   - If you downloaded `BUDDY-v1.0.0-Chrome.zip`:
+     Right-click the ZIP file and select **"Extract Here"**. This creates an extracted folder containing `manifest.json`.
+2. **Open Extensions Page:**
+   - In **Chrome**: Go to `chrome://extensions/`
+   - In **Brave**: Go to `brave://extensions/`
+   - In **Edge**: Go to `edge://extensions/`
+3. **Enable Developer Mode:**
+   - Toggle the **Developer mode** switch in the top-right corner to **ON**.
+4. **Load the Extension:**
+   - Click the **"Load unpacked"** button in the top-left corner.
+   - ⚠️ **IMPORTANT:** In the folder picker, select the **`BUDDY-Chrome-Extension`** folder (the folder that directly contains `manifest.json`).
+   - *Do NOT select the parent `release` folder or the `.zip` file itself!*
+5. **Pin and Enjoy:**
+   - Click the puzzle piece icon 🧩 in your browser toolbar and pin **BUDDY**!
+
+> [!TIP]
+> **Troubleshooting: "Manifest file is missing or unreadable"**
+> If Chrome displays this error, it means you selected a parent folder (like `release`) or an unextracted zip file. Chrome requires you to select the inner folder where `manifest.json` resides directly:
+> **Path to select:** `BUDDY/release/BUDDY-Chrome-Extension`
+
+---
+
+#### For Mozilla Firefox:
+1. Open Firefox and navigate to `about:debugging#/runtime/this-firefox`.
+2. Click **"Load Temporary Add-on..."**.
+3. In the file dialog, open `release/BUDDY-Firefox-Extension` and select the **`manifest.json`** file.
+4. BUDDY is instantly active with all shield and wellbeing features!
 
 ---
 
@@ -213,13 +238,14 @@ pnpm install
 # 3. Build the unified all-in-one extension for Chrome and Firefox
 pnpm run build
 
-# 4. Package production ZIPs
+# 4. Package production ZIPs & unpacked release folders
 pnpm run build:zip
 ```
 
 #### Load Unpacked in Your Browser:
-- **Chrome / Brave / Edge:** Load `apps/buddy-dashboard/.output/chrome-mv3`
-- **Firefox:** Navigate to `about:debugging#/runtime/this-firefox` and load `apps/buddy-dashboard/.output/firefox-mv3/manifest.json`
+- **Chrome / Brave / Edge:** Select `apps/buddy-dashboard/.output/chrome-mv3` or `release/BUDDY-Chrome-Extension`
+- **Firefox:** Navigate to `about:debugging#/runtime/this-firefox` and select `release/BUDDY-Firefox-Extension/manifest.json`
+
 
 ---
 
