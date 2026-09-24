@@ -42,10 +42,12 @@ test.describe('Buddy Extension E2E Suite', () => {
       await popupPage.goto(`chrome-extension://${extensionId}/popup.html`);
       await popupPage.waitForLoadState('domcontentloaded');
 
-      const bodyContent = await popupPage.content();
-      expect(bodyContent).toContain('Buddy Shield');
-      expect(bodyContent).toContain('Active');
-      expect(bodyContent).toContain('Block Ads');
+      const bodyText = await popupPage.innerText('body');
+      expect(bodyText).toContain('Buddy Shield');
+      expect(bodyText).toContain('Active');
+      expect(bodyText).toContain('Ads & banners');
+      expect(bodyText).toContain('Trackers blocked');
+      expect(bodyText).toContain('Global Shield Protection');
 
       await popupPage.close();
       await page.close();

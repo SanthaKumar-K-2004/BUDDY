@@ -7,6 +7,7 @@
     "build": "turbo run build",
     "build:chrome": "turbo run build:chrome",
     "build:firefox": "turbo run build:firefox",
+    "build:zip": "pnpm --filter \"./apps/*\" run build:zip",
     "typecheck": "turbo run typecheck",
     "lint": "turbo run lint",
     "test": "vitest run",

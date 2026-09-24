@@ -316,7 +316,7 @@ Test Files  48 passed (48)
           <img src="https://img.shields.io/badge/GitHub-SanthaKumar--K--2004-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Profile" />
         </a>
         &nbsp;
-        <a href="https://www.linkedin.com/in/santhakumar-k">
+        <a href="https://www.linkedin.com/in/santhakumar-k/">
           <img src="https://img.shields.io/badge/LinkedIn-santhakumar--k-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Profile" />
         </a>
         &nbsp;
