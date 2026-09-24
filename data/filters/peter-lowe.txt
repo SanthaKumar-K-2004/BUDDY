@@ -1,0 +1,9 @@
+# Ad and tracking server list
+# Maintainer: Peter Lowe
+# License: CC BY 3.0
+# URL: https://pgl.yoyo.org/adservers/
+||adclick.g.doubleclick.net^
+||ad-server.yoyo.org^
+||analytics.yahoo.com^
+||trackers.example.net^
+||metrics.adnetwork.com^

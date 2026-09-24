@@ -1,0 +1,15 @@
+! Check that BOM, CRLF, and duplicates are handled
+! Title: Synthetic Multi-Feature Fixture
+! Version: 1.0.0
+! License: MIT
+||duplicate.example.com^
+||duplicate.example.com^
+||test-thirdparty.com^$third-party
+@@||whitelisted.org/script.js$script
+/banner\d+\.jpg/$image
+##.ad-banner-test
+##+js(set-local-storage-item, ad-seen, true)
+127.0.0.1 malicious-hosts-domain.com
+0.0.0.0 tracking-beacon.org
+! An invalid rule to test error handling
+||bad-regex-rule.com^$/invalid[modifier

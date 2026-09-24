@@ -1,0 +1,53 @@
+name: Buddy Extension CI
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+
+jobs:
+  validate:
+    name: Build, Typecheck, Test, and Verify
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 12.5.1
+          run_install: false
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Strict TypeScript Compilation
+        run: npx tsc --build
+
+      - name: Unit & Integration Tests (Vitest)
+        run: npx vitest run
+
+      - name: Build All Extensions (Chrome & Firefox MV3)
+        run: |
+          pnpm --filter buddy-shield run build
+          pnpm --filter buddy-shield run build:firefox
+          pnpm --filter buddy-focus run build
+          pnpm --filter buddy-focus run build:firefox
+          pnpm --filter buddy-family run build
+          pnpm --filter buddy-family run build:firefox
+          pnpm --filter buddy-dashboard run build
+          pnpm --filter buddy-dashboard run build:firefox
+
+      - name: Install Playwright Browsers
+        run: npx playwright install chromium --with-deps
+
+      - name: Run E2E Tests
+        run: npx playwright test

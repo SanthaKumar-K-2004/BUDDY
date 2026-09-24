@@ -1,0 +1,93 @@
+{
+  "artifacts": [
+    {
+      "contentHash": "e4ec76536a3c6504f874bb1b1a80af98b409affccf192693f0eff8fcd2902bed",
+      "isValid": true,
+      "name": "ruleset_ads.json",
+      "path": "rulesets/ruleset_ads.json",
+      "regexRules": 0,
+      "ruleCount": 23,
+      "rulesetId": "ruleset_ads",
+      "safeRules": 23,
+      "sizeBytes": 4365,
+      "unsafeRules": 0
+    },
+    {
+      "contentHash": "452cbb50ab1794bc2a688531a276f3e25022e352b5e87309140485324a8d04c5",
+      "isValid": true,
+      "name": "ruleset_trackers.json",
+      "path": "rulesets/ruleset_trackers.json",
+      "regexRules": 0,
+      "ruleCount": 14,
+      "rulesetId": "ruleset_trackers",
+      "safeRules": 14,
+      "sizeBytes": 2844,
+      "unsafeRules": 0
+    }
+  ],
+  "generatedAt": "2026-09-22T17:06:14.817Z",
+  "pipelineVersion": "1.0.0",
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "category": "ADS",
+      "contentHash": "559d631adce3868e20b2f40abaa50a3be7e217de7de57a14d2af24010a3b8d6c",
+      "id": "easylist",
+      "ignoredRules": 13,
+      "invalidRules": 0,
+      "name": "EasyList Standard",
+      "totalLines": 29,
+      "url": "https://raw.githubusercontent.com/easylist/easylist/master/easylist/easylist_general_block.txt",
+      "validRules": 16
+    },
+    {
+      "category": "TRACKERS",
+      "contentHash": "456da3f91eaa894fe7514bb1c1928303a14454f232340fbd1b10391bd46c62de",
+      "id": "easyprivacy",
+      "ignoredRules": 8,
+      "invalidRules": 0,
+      "name": "EasyPrivacy Tracking Protection",
+      "totalLines": 19,
+      "url": "https://raw.githubusercontent.com/easylist/easylist/master/easyprivacy/easyprivacy_general.txt",
+      "validRules": 11
+    },
+    {
+      "category": "ADS",
+      "contentHash": "2b608ff7a37ef35b4938281fc62706cba3d77dc910d7991dbaf56b1de83a2641",
+      "id": "peter-lowe",
+      "ignoredRules": 4,
+      "invalidRules": 0,
+      "name": "Peter Lowe's Ad and Tracking Server List",
+      "totalLines": 9,
+      "url": "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=adblockplus&showintro=0&mimetype=plaintext",
+      "validRules": 5
+    },
+    {
+      "category": "ADS",
+      "contentHash": "7c5f84150f96acab170ab4ff5cbc73a002f5f765782a24cd40b466ec1fccc2e9",
+      "id": "ublock-filters",
+      "ignoredRules": 2,
+      "invalidRules": 0,
+      "name": "uBlock Origin Filters",
+      "totalLines": 8,
+      "url": "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt",
+      "validRules": 6
+    },
+    {
+      "category": "TRACKERS",
+      "contentHash": "b1f54da452eb09ef8a3982ae08f17a08cf8727b30c94c5ed7bb030d0355c1cb1",
+      "id": "ublock-privacy",
+      "ignoredRules": 2,
+      "invalidRules": 0,
+      "name": "uBlock Origin Privacy",
+      "totalLines": 5,
+      "url": "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/privacy.txt",
+      "validRules": 3
+    }
+  ],
+  "toolchain": {
+    "agtreeVersion": "^4.2.1",
+    "dnrConverterVersion": "^1.1.2",
+    "node": "v26.4.0"
+  }
+}

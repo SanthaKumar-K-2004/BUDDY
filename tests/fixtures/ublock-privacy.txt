@@ -1,0 +1,5 @@
+! Title: uBlock Privacy Sample
+! License: GPLv3
+||fingerprintjs.com^$third-party
+||branch.io^$third-party
+||appsflyer.com^$script

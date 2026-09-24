@@ -1,0 +1,20 @@
+[Adblock Plus 2.0]
+! Title: EasyPrivacy Sample Fixture
+! Version: 202609220002
+! Last modified: 22 Sep 2026 12:00 UTC
+! Homepage: https://easylist.to/
+! Licence: GPLv3 / CC BY-SA 3.0
+!
+||analytics.google.com^$third-party
+||googletagmanager.com^$script
+||hotjar.com^$third-party,script
+||telemetry.example.com^$xmlhttprequest
+||segment.io^$third-party
+||mixpanel.com^$third-party
+||criteo.com^$third-party
+||taboola.com^$third-party
+/pixel.gif$image,third-party
+/telemetry/collect$xmlhttprequest,ping
+
+! Exception
+@@||internal-analytics.company.com^$domain=company.com

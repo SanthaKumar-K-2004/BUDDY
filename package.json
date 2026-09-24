@@ -1,0 +1,39 @@
+{
+  "name": "buddy-suite",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Buddy Extension Suite — Local-first, privacy-first, enterprise-grade browser extension ecosystem",
+  "scripts": {
+    "build": "turbo run build",
+    "build:chrome": "turbo run build:chrome",
+    "build:firefox": "turbo run build:firefox",
+    "typecheck": "turbo run typecheck",
+    "lint": "turbo run lint",
+    "test": "vitest run",
+    "test:unit": "vitest run",
+    "test:e2e": "playwright test",
+    "filters:build": "pnpm --filter @buddy/filter-pipeline run compile",
+    "filters:update": "pnpm --filter @buddy/filter-pipeline run update",
+    "filters:validate": "pnpm --filter @buddy/filter-pipeline run validate",
+    "filters:test": "vitest run tests/unit/filter-pipeline tests/integration/filter-pipeline",
+    "shield:build": "pnpm --filter buddy-shield run build && pnpm --filter buddy-shield run build:firefox",
+    "shield:test": "vitest run tests/unit/shield tests/integration/shield",
+    "shield:audit-licenses": "./tools/shield/verify-runtime-license.sh"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/chrome": "^0.0.308",
+    "@types/node": "^22.13.9",
+    "happy-dom": "^20.14.5",
+    "playwright": "^1.50.1",
+    "turbo": "^2.4.4",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.7",
+    "wxt": "^0.19.27"
+  },
+  "packageManager": "pnpm@12.5.1",
+  "dependencies": {
+    "@ghostery/adblocker": "^2.18.2",
+    "@ghostery/adblocker-content": "^2.18.2"
+  }
+}

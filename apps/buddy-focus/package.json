@@ -1,0 +1,30 @@
+{
+  "name": "buddy-focus",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wxt",
+    "dev:firefox": "wxt -b firefox",
+    "build": "wxt build",
+    "build:chrome": "wxt build -b chrome",
+    "build:firefox": "wxt build -b firefox",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@buddy/focus-engine": "workspace:*",
+    "@buddy/intelligence-engine": "workspace:*",
+    "@buddy/shared-types": "workspace:*",
+    "@buddy/site-adapters": "workspace:*",
+    "@buddy/storage": "workspace:*",
+    "@buddy/ui-components": "workspace:*",
+    "@buddy/watch-time": "workspace:*",
+    "preact": "^10.26.4"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.10.1",
+    "@types/chrome": "^0.0.308",
+    "typescript": "^5.7.3",
+    "wxt": "^0.19.27"
+  }
+}

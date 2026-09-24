@@ -1,0 +1,5 @@
+! Title: uBlock Annoyances Sample
+! License: GPLv3
+||consent.cookiebot.com^
+||onetrust.com^$script
+||newsletter-popup.service.com^

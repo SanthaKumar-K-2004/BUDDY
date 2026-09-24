@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  "include": ["src/**/*"],
+  "references": [
+    { "path": "../shared-types" },
+    { "path": "../storage" },
+    { "path": "../shield-policy" },
+    { "path": "../shield-stats" },
+    { "path": "../shield-dnr" },
+    { "path": "../shield-cosmetic" }
+  ]
+}

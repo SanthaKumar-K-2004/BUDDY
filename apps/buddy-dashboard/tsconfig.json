@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "./.cache/tsc",
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact"
+  },
+  "include": ["entrypoints/**/*", "src/**/*", "wxt.config.ts"],
+  "references": [
+    { "path": "../../packages/shared-types" },
+    { "path": "../../packages/storage" },
+    { "path": "../../packages/ui-components" },
+    { "path": "../../packages/mood-engine" },
+    { "path": "../../packages/family-engine" },
+    { "path": "../../packages/i18n" }
+  ]
+}

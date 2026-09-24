@@ -1,0 +1,90 @@
+[
+  {
+    "buildTime": true,
+    "license": "GPL-3.0-only",
+    "licenseUrl": "https://github.com/AdguardTeam/tsurlfilter/blob/master/packages/dnr-converter/LICENSE",
+    "maintainer": "Adguard Software Ltd.",
+    "name": "@adguard/dnr-converter",
+    "notes": "Quarantined in @buddy/filter-pipeline. Never packaged into runtime extension bundle.",
+    "runtime": false,
+    "source": "https://github.com/AdguardTeam/tsurlfilter/tree/master/packages/dnr-converter",
+    "version": "1.1.2"
+  },
+  {
+    "buildTime": true,
+    "license": "MIT",
+    "licenseUrl": "https://github.com/AdguardTeam/tsurlfilter/blob/master/packages/agtree/LICENSE",
+    "maintainer": "Adguard Software Ltd.",
+    "name": "@adguard/agtree",
+    "notes": "Adblock syntax parser AST library.",
+    "runtime": false,
+    "source": "https://github.com/AdguardTeam/tsurlfilter/tree/master/packages/agtree",
+    "version": "4.2.1"
+  },
+  {
+    "buildTime": true,
+    "category": "ADS",
+    "license": "GPLv3 / CC BY-SA 3.0",
+    "licenseUrl": "https://easylist.to/pages/licence.html",
+    "maintainer": "EasyList Community",
+    "name": "EasyList Standard",
+    "notes": "Upstream rule definitions. Compiled into browser-native declarative Net Request JSON rulesets.",
+    "runtime": false,
+    "source": "https://raw.githubusercontent.com/easylist/easylist/master/easylist/easylist_general_block.txt"
+  },
+  {
+    "buildTime": true,
+    "category": "TRACKERS",
+    "license": "GPLv3 / CC BY-SA 3.0",
+    "licenseUrl": "https://easylist.to/pages/licence.html",
+    "maintainer": "EasyList Community",
+    "name": "EasyPrivacy Tracking Protection",
+    "notes": "Upstream rule definitions. Compiled into browser-native declarative Net Request JSON rulesets.",
+    "runtime": false,
+    "source": "https://raw.githubusercontent.com/easylist/easylist/master/easyprivacy/easyprivacy_general.txt"
+  },
+  {
+    "buildTime": true,
+    "category": "ADS",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://pgl.yoyo.org/adservers/",
+    "maintainer": "Peter Lowe",
+    "name": "Peter Lowe's Ad and Tracking Server List",
+    "notes": "Upstream rule definitions. Compiled into browser-native declarative Net Request JSON rulesets.",
+    "runtime": false,
+    "source": "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=adblockplus&showintro=0&mimetype=plaintext"
+  },
+  {
+    "buildTime": true,
+    "category": "ADS",
+    "license": "GPLv3",
+    "licenseUrl": "https://github.com/uBlockOrigin/uAssets/blob/master/LICENSE",
+    "maintainer": "Raymond Hill & uAssets Team",
+    "name": "uBlock Origin Filters",
+    "notes": "Upstream rule definitions. Compiled into browser-native declarative Net Request JSON rulesets.",
+    "runtime": false,
+    "source": "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt"
+  },
+  {
+    "buildTime": true,
+    "category": "TRACKERS",
+    "license": "GPLv3",
+    "licenseUrl": "https://github.com/uBlockOrigin/uAssets/blob/master/LICENSE",
+    "maintainer": "Raymond Hill & uAssets Team",
+    "name": "uBlock Origin Privacy",
+    "notes": "Upstream rule definitions. Compiled into browser-native declarative Net Request JSON rulesets.",
+    "runtime": false,
+    "source": "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/privacy.txt"
+  },
+  {
+    "buildTime": true,
+    "category": "ANNOYANCES",
+    "license": "GPLv3",
+    "licenseUrl": "https://github.com/uBlockOrigin/uAssets/blob/master/LICENSE",
+    "maintainer": "Raymond Hill & uAssets Team",
+    "name": "uBlock Origin Annoyances",
+    "notes": "Upstream rule definitions. Compiled into browser-native declarative Net Request JSON rulesets.",
+    "runtime": false,
+    "source": "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/annoyances.txt"
+  }
+]

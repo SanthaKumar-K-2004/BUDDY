@@ -1,0 +1,8 @@
+! Title: uBlock Origin Filters Sample
+! License: GPLv3
+||ad.yieldmo.com^$third-party
+||adzerk.net^
+||outbrain.com^$third-party
+/adservice.js$script
+@@||allowed-ad-partner.org/ads.js$script
+##.sponsored-story

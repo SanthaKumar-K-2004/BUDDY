@@ -1,0 +1,32 @@
+[Adblock Plus 2.0]
+! Title: EasyList Standard Sample Fixture
+! Version: 202609220001
+! Last modified: 22 Sep 2026 12:00 UTC
+! Homepage: https://easylist.to/
+! Licence: GPLv3 / CC BY-SA 3.0
+!
+! Checksum: sample-easylist-hash
+!
+! *** General Advert Blocking Rules ***
+||doubleclick.net^$third-party
+||googleads.g.doubleclick.net^
+||googlesyndication.com^$third-party
+||adservice.google.com^
+||adsystem.com^$image,script
+||advertising.com^$third-party,domain=news.example.com|~safe.org
+/banner-ad-$image
+/ad-rotator-$script
+/promoted-post/*$subdocument
+
+! *** Exceptions / Allow Rules ***
+@@||example.com/ads/sponsored.js$script
+@@||partner.google.com/ad-frame$subdocument,domain=partner.com
+
+! *** Cosmetic Element Hiding Rules ***
+##.ad-banner
+###sponsor-box
+##div[class*="-advertisement-"]
+
+! *** Hosts style lines ***
+127.0.0.1 bad-ad-network.com
+0.0.0.0 tracking-server.net

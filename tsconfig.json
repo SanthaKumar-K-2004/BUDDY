@@ -1,0 +1,23 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true
+  },
+  "include": [],
+  "references": [
+    { "path": "./packages/shared-types" },
+    { "path": "./packages/storage" },
+    { "path": "./packages/watch-time" },
+    { "path": "./packages/activity-engine" },
+    { "path": "./packages/focus-engine" },
+    { "path": "./packages/site-adapters" },
+    { "path": "./packages/mood-engine" },
+    { "path": "./packages/i18n" },
+    { "path": "./packages/ui-components" },
+    { "path": "./packages/filter-pipeline" },
+    { "path": "./apps/buddy-shield" },
+    { "path": "./apps/buddy-focus" },
+    { "path": "./apps/buddy-family" },
+    { "path": "./apps/buddy-dashboard" }
+  ]
+}

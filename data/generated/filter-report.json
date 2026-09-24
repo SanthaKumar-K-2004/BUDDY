@@ -1,0 +1,149 @@
+{
+  "byCategory": {
+    "ADS": {
+      "dnrRules": 23,
+      "rawLines": 46,
+      "sourceCount": 3,
+      "validRules": 27
+    },
+    "TRACKERS": {
+      "dnrRules": 14,
+      "rawLines": 24,
+      "sourceCount": 2,
+      "validRules": 14
+    }
+  },
+  "generatedAt": "2026-09-22T17:06:14.820Z",
+  "rulesets": [
+    {
+      "isValid": true,
+      "issues": [],
+      "limits": {
+        "maxRegexRules": 1000,
+        "maxStaticRules": 30000,
+        "percentRegexUsed": 0,
+        "percentStaticUsed": 0
+      },
+      "regexRules": 0,
+      "rulesetId": "ruleset_ads",
+      "safeRules": 23,
+      "totalRules": 23,
+      "unsafeRules": 0
+    },
+    {
+      "isValid": true,
+      "issues": [],
+      "limits": {
+        "maxRegexRules": 1000,
+        "maxStaticRules": 30000,
+        "percentRegexUsed": 0,
+        "percentStaticUsed": 0
+      },
+      "regexRules": 0,
+      "rulesetId": "ruleset_trackers",
+      "safeRules": 14,
+      "totalRules": 14,
+      "unsafeRules": 0
+    }
+  ],
+  "sources": [
+    {
+      "category": "ADS",
+      "id": "easylist",
+      "name": "EasyList Standard",
+      "stats": {
+        "cosmeticRules": 3,
+        "errorRules": 0,
+        "hostsRules": 2,
+        "ignoredRules": 13,
+        "networkRules": 13,
+        "scriptletRules": 0,
+        "sourceId": "easylist",
+        "totalLines": 29,
+        "unsupportedRules": 0,
+        "validRules": 16,
+        "warningRules": 0
+      }
+    },
+    {
+      "category": "TRACKERS",
+      "id": "easyprivacy",
+      "name": "EasyPrivacy Tracking Protection",
+      "stats": {
+        "cosmeticRules": 0,
+        "errorRules": 0,
+        "hostsRules": 0,
+        "ignoredRules": 8,
+        "networkRules": 11,
+        "scriptletRules": 0,
+        "sourceId": "easyprivacy",
+        "totalLines": 19,
+        "unsupportedRules": 0,
+        "validRules": 11,
+        "warningRules": 0
+      }
+    },
+    {
+      "category": "ADS",
+      "id": "peter-lowe",
+      "name": "Peter Lowe's Ad and Tracking Server List",
+      "stats": {
+        "cosmeticRules": 0,
+        "errorRules": 0,
+        "hostsRules": 0,
+        "ignoredRules": 4,
+        "networkRules": 5,
+        "scriptletRules": 0,
+        "sourceId": "peter-lowe",
+        "totalLines": 9,
+        "unsupportedRules": 0,
+        "validRules": 5,
+        "warningRules": 0
+      }
+    },
+    {
+      "category": "ADS",
+      "id": "ublock-filters",
+      "name": "uBlock Origin Filters",
+      "stats": {
+        "cosmeticRules": 1,
+        "errorRules": 0,
+        "hostsRules": 0,
+        "ignoredRules": 2,
+        "networkRules": 5,
+        "scriptletRules": 0,
+        "sourceId": "ublock-filters",
+        "totalLines": 8,
+        "unsupportedRules": 0,
+        "validRules": 6,
+        "warningRules": 0
+      }
+    },
+    {
+      "category": "TRACKERS",
+      "id": "ublock-privacy",
+      "name": "uBlock Origin Privacy",
+      "stats": {
+        "cosmeticRules": 0,
+        "errorRules": 0,
+        "hostsRules": 0,
+        "ignoredRules": 2,
+        "networkRules": 3,
+        "scriptletRules": 0,
+        "sourceId": "ublock-privacy",
+        "totalLines": 5,
+        "unsupportedRules": 0,
+        "validRules": 3,
+        "warningRules": 0
+      }
+    }
+  ],
+  "summary": {
+    "totalGeneratedDnrRules": 37,
+    "totalIgnoredRules": 29,
+    "totalInvalidRules": 0,
+    "totalRawLines": 70,
+    "totalSources": 5,
+    "totalValidRules": 41
+  }
+}
